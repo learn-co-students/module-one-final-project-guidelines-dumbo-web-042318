@@ -26,25 +26,25 @@ class Interface
     set_answer(set_question)
   end
 
-  def self.list_all_questions
-    Question.all.length.times do |i|
-      puts "#{i+1}. #{Question.all[i].question}"
-    end
+  # get arrays of question and answer combos
+  def self.get_all_questions
+    return Question.all.map { |q| q }
   end
 
-
-  #TODO refactor
-  def self.list_all_answered_questions
-    q = Question.all
-    q.length.times { |i| puts q[i].question if q[i].answer}
+  def self.get_all_answered_questions
+    return Question.all.select { |q| q.answer != nil }
   end
 
-  def self.list_all_unanswered_questions
-    q = Question.all
-    q.length.times { |i| puts q[i].question unless q[i].answer}
+  def self.get_all_unanswered_questions
+    return Question.all.select { |q| q.answer.nil? }
   end
 
-
+  def list_questions
+    # TODO convert to print method of given arrays
+    # Question.all.length.times do |i|
+    #   puts "#{i+1}. #{Question.all[i].question}"
+    # end
+  end
 
 
   # not for user, eventually private
