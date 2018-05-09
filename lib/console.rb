@@ -26,6 +26,11 @@ class Interface
     set_answer(set_question)
   end
 
+  def self.list_all_questions
+    Question.all.length.times do |i|
+      puts "#{i+1}. #{Question.all[i].question}"
+    end
+  end
 
 
   # not for user, eventually private
