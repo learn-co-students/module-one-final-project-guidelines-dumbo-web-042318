@@ -79,8 +79,43 @@ class Interface
   end
 
 
+  # delete methods
 
+  def self.question_object_from_menu(index_from_menu)
+    # BE SURE TO SHOW USER THE GET_ALL_QUESTIONS ARRAY FOR THE DELETE MENU
+    arr = self.get_all_questions
+    return arr[index_from_menu - 1]
+  end
 
+  def self.destroy_links(index_from_menu)
+    question = self.question_object_from_menu(index_from_menu)
+    self.destroy_question(question)
+  end
+
+  def self.destroy_answer_links(index_from_menu)
+    question = self.question_object_from_menu(index_from_menu)
+    self.destroy_links(question)
+    self.destroy_answer(question)
+  end
+
+  def self.destroy_question_answer_links(index_from_menu)
+    question = self.question_object_from_menu(index_from_menu)
+    self.destroy_links(question)
+    self.destroy_answer(question)
+    self.destroy_question(question)
+  end
+
+  def self.destroy_question(question)
+    question.destroy
+  end
+
+  def self.destroy_answer(question)
+    question.answer.destroy
+  end
+
+  def self.destroy_links(question)
+    question.answer.links.each { |link| link.destroy }
+  end
 
   # not for user, eventually private
   def self.set_link_answer(link, answer)
