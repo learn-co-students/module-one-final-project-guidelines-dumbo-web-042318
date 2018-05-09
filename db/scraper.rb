@@ -62,4 +62,13 @@ class Scraper
             end
         end
     end
+
+    def scrape_hash(i) 
+        hash = {}
+        hash[:name] =  self.states[i]
+        hash[:description] = self.each_state_description[i]
+        hash[:legal_to_grow] = self.grow?[i]
+        hash[:legal_to_possess] = self.legal_to_possess[i]
+        hash
+    end
 end
