@@ -1,0 +1,13 @@
+-Web scraping
+    -
+
+-Building Tables and Models
+    -I'll make Models
+    -Saige has Tables
+
+-Seed data to tables 
+
+-CLI app
+
+
+-can't have "420" be the start of class...can't start with integer
