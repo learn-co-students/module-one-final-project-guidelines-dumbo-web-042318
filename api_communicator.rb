@@ -17,7 +17,7 @@ require 'pry'
     country_code = "fr"
     apikey = "304bcd251ded0521b8be10e3c5743f37"
     weather_json = RestClient.get("api.openweathermap.org/data/2.5/forecast?q=#{city_name},#{country_code}&APPID=#{apikey}")
-    puts weather_hash = JSON.parse(weather_json)
+    print weather_hash = JSON.parse(weather_json)
   end
 
 get_weather_data
