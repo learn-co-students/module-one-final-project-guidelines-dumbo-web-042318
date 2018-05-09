@@ -1,7 +1,7 @@
-Question.delete_all
-Answer.delete_all
-LinkAnswer.delete_all
-Link.delete_all
+# Question.delete_all
+# Answer.delete_all
+# LinkAnswer.delete_all
+# Link.delete_all
 
 
 # questions

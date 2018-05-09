@@ -33,6 +33,20 @@ class Interface
   end
 
 
+  #TODO refactor
+  def self.list_all_answered_questions
+    q = Question.all
+    q.length.times { |i| puts q[i].question if q[i].answer}
+  end
+
+  def self.list_all_unanswered_questions
+    q = Question.all
+    q.length.times { |i| puts q[i].question unless q[i].answer}
+  end
+
+
+
+
   # not for user, eventually private
   def self.set_link_answer(link, answer)
     LinkAnswer.create(link_id: link.id, answer_id: answer.id)
