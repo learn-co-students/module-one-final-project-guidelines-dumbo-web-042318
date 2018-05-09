@@ -43,6 +43,18 @@ class Interface
     arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
   end
 
+  # gets and prints out various combos of q's, a's, and links
+
+  def self.all_questions_with_answers
+    arr = self.get_all_answered_questions
+    arr.each_with_index do |question, i|
+      puts "#{i+1}. #{question.question}"
+      puts  "-" * 20
+      puts "#{question.answer.answer}"
+      puts  "-" * 20 + "\n\n"
+    end
+  end
+
 
 
 
