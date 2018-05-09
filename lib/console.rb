@@ -61,6 +61,23 @@ class Interface
     links.length.times { |i| puts "#{i+1}. #{links[i].url}\n#{links[i].comment}" }
   end
 
+  def self.print_link(answer)
+    answer.links.each do |link|
+      puts "* #{link.url}\n\t#{link.comment}"
+    end
+  end
+
+  def self.list_everything
+    self.get_all_answered_questions.each_with_index do |q, i|
+      puts  "-" * 20
+      puts "#{i+1}. #{q.question}"
+      puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
+      puts "Links:"
+      self.print_link(q.answer)
+      puts ""
+    end
+  end
+
 
 
 
