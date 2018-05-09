@@ -1,4 +1,4 @@
-class ForTwentyTrip < ActiveRecord::Base
+class FourTwentyTrip < ActiveRecord::Base
     
     belongs_to :user
     belongs_to :location

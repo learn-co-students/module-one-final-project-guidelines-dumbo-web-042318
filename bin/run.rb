@@ -2,4 +2,5 @@
 
 require_relative 'config/environment'
 
-run_for_twenty_tripster
+###do i need to require 'lib', if it's already required in config/environment which is required above?
+require_all 'lib'
