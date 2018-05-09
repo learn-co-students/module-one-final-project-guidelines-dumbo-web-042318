@@ -1,3 +1,9 @@
+Question.delete_all
+Answer.delete_all
+LinkAnswer.delete_all
+Link.delete_all
+
+
 # questions
 q_1 = Question.create(question: "What was Tesla's middle name?")
 q_2 = Question.create(question: "Is Honda a good car?")
