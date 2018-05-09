@@ -39,12 +39,12 @@ class Interface
     return Question.all.select { |q| q.answer.nil? }
   end
 
-  def list_questions
-    # TODO convert to print method of given arrays
-    # Question.all.length.times do |i|
-    #   puts "#{i+1}. #{Question.all[i].question}"
-    # end
+  def self.list_questions(arr)
+    arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
   end
+
+
+
 
 
   # not for user, eventually private
