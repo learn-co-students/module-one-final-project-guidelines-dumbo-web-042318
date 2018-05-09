@@ -91,15 +91,17 @@ class WeatherAPIGetter
     puts "Hello! Welcome to WeatherCLI! Before we get to the weather:"
     puts "What is your name?"
     username = self.get_user_name
-    new_user = User.create(name: username)
+    new_user = User.find_or_create_by(name: username)
     self.get_weather_data
 
     Query.create(city: city, country_code: country_code, user: new_user)
 
     a = self.create_weekly_forecast
     Query.last.update(forecast: a)
-    binding.pry
-    true
+
+    puts "The temperature in #{Query.last.city} is #{Forecast.last.temp}"
+    # binding.pry
+    # true
   end
 
 
