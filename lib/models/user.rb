@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-    has_many :fourtwentytrips
-    has_many :locations, through: :fourtwentytrips
+    has_many :four_twenty_trips
+    has_many :locations, through: :four_twenty_trips
 
     # def self.create_user(name, age, home_state)
     #     User.create(name, age, home_state)

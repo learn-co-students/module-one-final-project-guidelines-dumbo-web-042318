@@ -1,7 +1,7 @@
 class Location < ActiveRecord::Base
 
-    has_many :fourtwentytrips
-    has_many :users, through: :fourtwentytrips
+    has_many :four_twenty_trips
+    has_many :users, through: :four_twenty_trips
     
     # ##corresponding question - "What states have legal 420?"
     # def self.list_all_locations
