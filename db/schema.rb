@@ -13,22 +13,29 @@
 ActiveRecord::Schema.define(version: 3) do
 
   create_table "four_twenty_trips", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "location_id"
+    t.integer  "user_id"
+    t.integer  "location_id"
+    t.datetime "date_of_trip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string  "name"
-    t.boolean "legal_to_sell"
-    t.string  "legal_to_grow"
-    t.integer "legal_age"
-    t.string  "legal_to_posses"
+    t.string   "name"
+    t.boolean  "legal_to_grow"
+    t.integer  "legal_age"
+    t.string   "legal_to_possess"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string  "name"
-    t.integer "age"
-    t.string  "home_state"
+    t.string   "name"
+    t.integer  "age"
+    t.string   "home_state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
