@@ -55,6 +55,12 @@ class Interface
     end
   end
 
+  def self.list_all_links
+    puts "Download iTerm2(TM) to visit links from command line by holding cmd when you click."
+    links = Link.all
+    links.length.times { |i| puts "#{i+1}. #{links[i].url}\n#{links[i].comment}" }
+  end
+
 
 
 
