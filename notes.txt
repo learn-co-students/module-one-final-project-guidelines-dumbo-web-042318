@@ -1,13 +1,23 @@
 -Web scraping
-    -
+    -Saige
 
 -Building Tables and Models
-    -I'll make Models
-    -Saige has Tables
+    -Models
+        -User
+            -user has_many trips
+            -user has_many locations through trips
+        -Trips
+            -belongs to user
+            -belongs to location
+        -Locations
+            -has_many trips
+            -has_many users through trips
+        -Methods
+            -
 
 -Seed data to tables 
 
 -CLI app
 
-
--can't have "420" be the start of class...can't start with integer
+-miscellaneous notes
+    -kind in mind, locations table...column name has "posses", not "possess"
