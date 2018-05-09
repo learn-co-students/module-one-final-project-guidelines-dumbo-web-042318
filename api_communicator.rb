@@ -1,6 +1,6 @@
-require 'rest-client'
-require 'json'
-require 'pry'
+# require 'rest-client'
+# require 'json'
+# require 'pry'
 
 #
 class WeatherAPIGetter
