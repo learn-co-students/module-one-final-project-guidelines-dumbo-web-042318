@@ -49,3 +49,25 @@ end
 
 
 Forecast.create(temp: date_key_hash(index)["temp"], humidity: date_key_hash(index)["humidity"], date: date_key_hash(index)["date"])
+
+#   def hash_sanitizer
+#     weather_hash = get_weather_data
+#     new_hash = {}
+#     weather_hash["list"][0]["main"].each do |info, value|
+#       new_hash[info]= value
+#         end
+#     new_hash
+#   end
+# def weekly_arr
+# weekly_arr = []
+#   weather_hash["list"].each do |hourly|
+#    if  hourly["dt_txt"].include?("12:00:00")
+#       weekly_arr << hourly
+#    end
+#   end
+# end
+#
+#   # def create_forecast
+#   #   Forecast.create(temp: main_temp_arr["temp"], humidity: main_temp_arr["humidity"])
+#   # end
+#
