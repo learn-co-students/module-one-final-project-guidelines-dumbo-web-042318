@@ -44,7 +44,7 @@ end
 
 def blazer_prompt
     user_input = gets.chomp.downcase
-    if user_input.include?("ye")
+    if user_input.include?("ye") || user_input.include?("for")
         new_blazer
     elsif user_input.chars.first == "n"
         puts "ok bromenheimerschmitz, we can do it later.."
@@ -121,7 +121,7 @@ def user_check
     puts "Is this you, chieftan #{User.all.last.name}?"
     ##this puts statement happens twice if user_input is 'yes', but after second 'yes', it works
     user_input = gets.chomp 
-        if user_input.include?("ye")
+        if user_input.include?("ye") || user_input.include?("for")
             puts "Great brometheus, let's book that trip!"
             return User.all.last
         elsif user_input.include?("n")
