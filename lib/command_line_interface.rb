@@ -43,7 +43,7 @@ class WeatherCLI
 
   def get_country_code
     puts "Country code? Please enter country code as 2 characters **Use us for United States**"
-    country_code = gets.chomp.downcase
+    country_code = gets.chomp
   end
 
   def get_forecast_from_api(city_name, country_code)
@@ -66,7 +66,7 @@ class WeatherCLI
   end
 
   def display_result
-    puts "Hi #{User.last.name}, the temperature in #{Query.last.city} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
+    puts "Hi #{User.last.name}, the temperature in #{Query.last.city}, #{Query.last.country_code} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
   end
 
 
