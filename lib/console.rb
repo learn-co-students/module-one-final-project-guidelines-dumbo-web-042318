@@ -20,6 +20,16 @@ class Interface
     set_link_answer(link, answer)
   end
 
+  def self.create_new_tag
+    puts "What's your new tag?"
+    input_tag = gets.strip
+    Tag.create(t_content: input_tag)
+  end
+
+  def self.create_tag_answer(tag, answer)
+    TagAnswer.create(tag: tag, answer: answer)
+  end
+
 
   # builder
   def self.set_question_answer
