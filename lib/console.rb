@@ -60,6 +60,7 @@ class Interface
       print "#{i+1}. #{tag.t_content} | "
       puts "\n" if (i+1) % 5 == 0
     end
+    puts ""
   end
 
   def self.list_questions_by_tag(tag)
@@ -201,6 +202,7 @@ class Menu
   def self.main_menu_options
     puts "1. Add question/answer/link/tags"
     puts "2. Show All questions/answers/links/tags"
+    puts "3. Show all question by tag"
     puts "Press q to exit"
   end
 end
@@ -247,6 +249,11 @@ def run
       when "2"
         puts "Here are all your questions, answers, links, and tags!"
         Interface.list_everything
+      when "3"
+        Interface.list_all_tags
+        puts "enter the number of the tag to see the questions linked to them"
+        choice = gets.strip
+        Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
       when "q"
         puts "bye!"
         break
