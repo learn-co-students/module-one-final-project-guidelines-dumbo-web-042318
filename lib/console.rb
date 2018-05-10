@@ -222,7 +222,8 @@ def run
         puts "and here it is with everything"
         Interface.list_everything
       when "2"
-        puts "selected option 2"
+        puts "Here are all your questions, answers, links, and tags!"
+        Interface.list_everything
       when "q"
         puts "bye!"
         break
