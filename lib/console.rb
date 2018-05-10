@@ -89,7 +89,7 @@ class Interface
       puts  "-" * 20
       puts "#{question.answer.answer}"
       puts  "-" * 20
-      self.list_question_tags(question)
+      # self.list_question_tags(question)
     end
   end
 
@@ -196,4 +196,32 @@ class Interface
     LinkAnswer.create(link_id: link.id, answer_id: answer.id)
   end
 
+end
+
+
+class Menu
+  def self.main_menu_options
+    puts "1. Add question/answer/link/tags"
+    puts "2. Show All questions/answers/links/tags"
+    puts "Press q to exit"
+  end
+end
+
+def run
+  loop do
+    puts "what would you like to do? "
+    Menu.main_menu_options
+    choice = gets.strip
+    case choice
+      when "1"
+        puts "you selected option 1"
+      when "2"
+        puts "selected option 2"
+      when "q"
+        puts "bye!"
+        break
+      else
+        puts "Hmmm, didn't get that try again."
+    end
+  end
 end
