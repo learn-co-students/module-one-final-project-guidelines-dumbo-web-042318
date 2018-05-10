@@ -15,12 +15,12 @@ class WeatherCLI
     country_code = get_country_code
     @weekly_arr = get_forecast_from_api(city_name, country_code)
     @batch = Batch.new
-    num = get_number_of_days
-    create_and_save_forecast(num)
+    @num = get_number_of_days
+    create_and_save_forecast(@num)
 
     Query.create(city: city_name, country_code: country_code, user: new_user, batch: @batch)
 
-    display_result
+    display_result(@batch.forecasts)
 
   end
 
@@ -73,9 +73,13 @@ class WeatherCLI
     date_key_hash = new_key.merge(new_date)
   end
 
-  def display_result
-    puts "Hi #{@username}, the temperature in #{Query.last.city}, #{Query.last.country_code} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
-  end
+  def display_result(arr_forecasts_obj)
+    # puts "Hi #{@username}, the temperature in #{Query.last.city}, #{Query.last.country_code} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
+    puts "Hi, #{@username}! Here’s the #{@num} day forecast:"
+    arr_forecasts_obj.each do |forecast|
+      puts "Date: #{forecast.date} \n Temperature: #{forecast.temp} F \n Humidity: #{forecast.humidity}%"
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+      end
+    end
 
-
- end
+end
