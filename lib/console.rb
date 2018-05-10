@@ -91,6 +91,13 @@ class Interface
     answer.update(answer: input)
   end
 
+  def self.update_link(link)
+    puts "What's your edited link url?"
+    new_url = gets.strip
+    puts "What's your edited comment for the link?"
+    new_comment = gets.strip
+    link.update(url: new_url, comment: new_comment)
+  end
 
 
   # selector methods
