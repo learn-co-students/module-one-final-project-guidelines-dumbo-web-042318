@@ -4,6 +4,7 @@ class CreateForecasts < ActiveRecord::Migration[5.0]
       t.float :temp
       t.integer :humidity
       t.datetime :date
+      # t.integer :user_id
     end
   end
 end

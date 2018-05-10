@@ -3,6 +3,7 @@ class WeatherCLI
   # def gimme_city # gets city from User
   #   puts "Which city would you like to view weather for? Please enter city."
   # end
+  @@id=Forecast.last.id
   def initialize
     @instance_of_weatherapigetter = WeatherAPIGetter.new
   end
@@ -14,7 +15,7 @@ class WeatherCLI
     country_code = get_country_code
     @weekly_arr = get_forecast_from_api(city_name, country_code)
 
-    create_and_save_forecast
+    create_and_save_forecast(get_num_days)
 
     new_query = Query.create(city: city_name, country_code: country_code, user: new_user)
     a = Forecast.last
@@ -27,6 +28,19 @@ class WeatherCLI
 
   def welcome
     puts "Hello! Welcome to WeatherCLI! Before we get to the weather:"
+  end
+
+  def get_num_days
+    puts "how many days do you want?"
+
+    num = gets.chomp.to_i
+    if num>5
+       num=5
+     elsif num<0
+       num=1
+     else
+       num
+     end
   end
 
   def get_user_name # gets user name
@@ -50,12 +64,13 @@ class WeatherCLI
     @instance_of_weatherapigetter.get_weather_forecast(city_name, country_code)
   end
 
-  def create_and_save_forecast
+  def create_and_save_forecast(num)
     i = 0
-    # while i < 5
+
+     while i < num
       Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date: date_key_hash(i)["date"])
-      # i += 1
-    # end
+       i += 1
+     end
   end
 
   def date_key_hash(index)#cleanup?
