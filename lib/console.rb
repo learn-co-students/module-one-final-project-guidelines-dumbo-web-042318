@@ -24,10 +24,10 @@ class Interface
   def self.create_new_tag(tag_name)
     Tag.create(t_content: tag_name)
   end
-#tag_answer
-  def self.create_tag_answer(tag, answer)
-    TagAnswer.create(tag: tag, answer: answer)
-  end
+# #tag_answer
+#   def self.create_tag_answer(tag, answer)
+#     TagAnswer.create(tag: tag, answer: answer)
+#   end
 
 
   # builder
@@ -189,18 +189,18 @@ class Interface
   def self.destroy_links(question)
     question.answer.links.each { |link| link.destroy } if question.answer
   end
-#tag_answer
-  def self.destroy_tag_from_answer(tag,answer)
-    if answer
-      tag_answer = TagAnswer.where("tag_id = ? AND answer_id = ?", tag[:id], answer[:id])[0]
-      tag_answer.destroy
-    end
-  end
+# #tag_answer
+#   def self.destroy_tag_from_answer(tag,answer)
+#     if answer
+#       tag_answer = TagAnswer.where("tag_id = ? AND answer_id = ?", tag[:id], answer[:id])[0]
+#       tag_answer.destroy
+#     end
+#   end
 #question
   def self.destroy_all_tags_from_question(question)
     if question.answer
       tags = question.answer.tags
-      tags.each { |tag| self.destroy_tag_from_answer(tag,question.answer) }
+      tags.each { |tag| TagAnswer.destroy_tag_from_answer(tag,question.answer) }
     end
   end
 #tag
@@ -289,7 +289,7 @@ class MenuCommands
         puts "enter the number of the tag to add it\nor type in a new tag and press enter"
         choice = gets.strip.downcase
         tag = (choice.to_i == 0) ? Interface.create_new_tag(choice) : Tag.all[choice.to_i - 1]
-        Interface.create_tag_answer(tag, new_answer)
+        TagAnswer.create_tag_answer(tag, new_answer)
       else # choice = false
         break
       end
