@@ -214,7 +214,13 @@ def run
     choice = gets.strip
     case choice
       when "1"
-        puts "you selected option 1"
+        new_question = Interface.set_question
+        new_answer = Interface.set_answer(new_question)
+        puts "ok you added"
+        puts "#{new_question.question}"
+        puts "#{new_answer.answer}"
+        puts "and here it is with everything"
+        Interface.list_everything
       when "2"
         puts "selected option 2"
       when "q"
