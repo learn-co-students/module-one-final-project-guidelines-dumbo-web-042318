@@ -77,6 +77,7 @@ class Interface
     end
   end
 
+  # THIS ONE
   def self.all_questions_with_answers
     arr = self.get_all_answered_questions
     arr.each_with_index do |question, i|
@@ -99,6 +100,7 @@ class Interface
     end
   end
 
+  # THIS ONE
   def self.list_everything
     self.get_all_answered_questions.each_with_index do |q, i|
       puts  "-" * 20
@@ -109,6 +111,7 @@ class Interface
       puts ""
     end
   end
+
   # update methods
 
   def self.update_question(question)
@@ -171,6 +174,12 @@ class Interface
   def self.destroy_links(question)
     question.answer.links.each { |link| link.destroy }
   end
+
+  def self.destroy_tag_from_answer(tag,answer)
+    tag_answer = TagAnswer.where("tag_id = ? AND answer_id = ?", tag[:id], answer[:id])[0]
+    tag_answer.destroy
+  end
+
 
   # not for user, eventually private
   def self.set_link_answer(link, answer)
