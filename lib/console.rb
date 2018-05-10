@@ -77,15 +77,31 @@ class Interface
       puts ""
     end
   end
+  # update methods
+
+  def self.update_question(question)
+    puts "What's your edited question?"
+    input = gets.strip
+    question.update(question: input)
+  end
+
+  def self.update_answer(answer)
+    puts "What's your edited answer?"
+    input = gets.strip
+    answer.update(answer: input)
+  end
 
 
-  # delete methods
+
+  # selector methods
 
   def self.question_object_from_menu(index_from_menu)
     # BE SURE TO SHOW USER THE GET_ALL_QUESTIONS ARRAY FOR THE DELETE MENU
     arr = self.get_all_questions
     return arr[index_from_menu - 1]
   end
+
+    # delete methods
 
   def self.destroy_links(index_from_menu)
     question = self.question_object_from_menu(index_from_menu)
