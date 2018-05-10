@@ -68,7 +68,7 @@ class WeatherCLI
   def create_and_save_forecast(num)
     i = 0
      while i < num
-      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date_text: date_key_hash(i)["date"], batch: @batch)
+      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date_text: date_key_hash(i)["date"], weather: date_key_hash(i)["description"], batch: @batch)
        i += 1
      end
   end
@@ -76,6 +76,7 @@ class WeatherCLI
   def date_key_hash(index)#cleanup?
     new_date = {}
     new_date["date"]= @weekly_arr[index]["dt_txt"]
+    new_date["description"]= @weekly_arr[index]["weather"][0]["description"]
     new_key = @weekly_arr[index]["main"]
     date_key_hash = new_key.merge(new_date)
   end
@@ -87,7 +88,7 @@ class WeatherCLI
       a = forecast.date_text
       print " Date: "
       p a
-      puts " Temperature: #{forecast.temp} F \n Humidity: #{forecast.humidity}%"
+      puts " Description: #{forecast.weather} \n Temperature: #{forecast.temp} F \n Humidity: #{forecast.humidity}%"
       puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     end
   end

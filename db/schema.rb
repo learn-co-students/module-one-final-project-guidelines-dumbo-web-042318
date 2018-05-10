@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510153215) do
+ActiveRecord::Schema.define(version: 20180510214735) do
 
   create_table "batches", force: :cascade do |t|
     t.string  "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20180510153215) do
     t.integer "humidity"
     t.date    "date_text"
     t.integer "batch_id"
+    t.string  "weather"
   end
 
   create_table "queries", force: :cascade do |t|
