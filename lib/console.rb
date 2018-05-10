@@ -70,11 +70,15 @@ class Interface
       if question.answer.tags.include?(tag)
         puts "#{i+1} #{question.question}"
         puts "- #{question.answer.answer}"
-        puts "TAGS: "
-        question.answer.tags.each {|tag| print tag.t_content + ' | '}
-        puts "\n\n"
+        self.list_question_tags(question)
       end
     end
+  end
+
+  def self.list_question_tags(question)
+    puts "TAGS: "
+    question.answer.tags.each {|tag| print tag.t_content + ' | '}
+    puts "\n\n"
   end
 
   # THIS ONE
@@ -84,7 +88,8 @@ class Interface
       puts "#{i+1}. #{question.question}"
       puts  "-" * 20
       puts "#{question.answer.answer}"
-      puts  "-" * 20 + "\n\n"
+      puts  "-" * 20
+      self.list_question_tags(question)
     end
   end
 
@@ -94,7 +99,7 @@ class Interface
     links.length.times { |i| puts "#{i+1}. #{links[i].url}\n#{links[i].comment}" }
   end
 
-  def self.print_link(answer)
+  def self.print_links(answer)
     answer.links.each do |link|
       puts "* #{link.url}\n\t#{link.comment}"
     end
@@ -107,8 +112,8 @@ class Interface
       puts "#{i+1}. #{q.question}"
       puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
       puts "Links:"
-      self.print_link(q.answer)
-      puts ""
+      self.print_links(q.answer)
+      self.list_question_tags(q)
     end
   end
 
