@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(version: 20180510153215) do
   end
 
   create_table "forecasts", force: :cascade do |t|
-    t.float    "temp"
-    t.integer  "humidity"
-    t.datetime "date"
-    t.integer  "batch_id"
+    t.float   "temp"
+    t.integer "humidity"
+    t.date    "date_text"
+    t.integer "batch_id"
   end
 
   create_table "queries", force: :cascade do |t|
