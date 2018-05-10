@@ -216,11 +216,16 @@ def run
       when "1"
         new_question = Interface.set_question
         new_answer = Interface.set_answer(new_question)
-        puts "ok you added"
-        puts "#{new_question.question}"
-        puts "#{new_answer.answer}"
-        puts "and here it is with everything"
-        Interface.list_everything
+        loop do
+          puts "Would you like to add a link?"
+          puts "y/n (lowecase, just the letter)"
+          choice = gets.strip.downcase
+          if choice == "y"
+            Interface.set_link(new_answer)
+          else
+            break
+          end
+        end
       when "2"
         puts "Here are all your questions, answers, links, and tags!"
         Interface.list_everything
