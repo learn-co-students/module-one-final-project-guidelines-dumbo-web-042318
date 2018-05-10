@@ -95,4 +95,11 @@ class WeatherCLI
       end
     end
 
+    # def date_sanitize(date_time)
+    #   new_date = date_time.localtime
+    #   # date_no_time = date_time.split(" ")[0]
+    #   # split_date = date_no_time.split("-")
+    #   # new_string = split_date[1] + "/" + split_date[2] + "/" + split_date[0]
+    # end
+
 end

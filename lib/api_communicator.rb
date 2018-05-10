@@ -43,9 +43,32 @@ class WeatherAPIGetter
 
   def get_all_weather_data(city_name, country_code) # gets info from API
     apikey = "304bcd251ded0521b8be10e3c5743f37"
-    weather_json = RestClient.get("api.openweathermap.org/data/2.5/forecast?q=#{city_name},#{country_code}&APPID=#{apikey}&units=imperial")
-    weather_hash = JSON.parse(weather_json)
+     link = "api.openweathermap.org/data/2.5/forecast?q=#{city_name},#{country_code}&APPID=#{apikey}&units=imperial"
+    begin
+      response = RestClient.get(link)
+      rescue
+        e
+
+      end
+
+     #JSON.parse(link)
+    #  if response.code == 404
+    #    throw Myerror.new
+    #  else
+       JSON.parse(response)
+    # end
   end
 
+  def e
+    puts "oops. entry not found"
+    WeatherCLI.new.run
+
+  end
 
  end
+
+ # class MyError
+ #  def initialize
+ #    puts "BUBBLE"
+ #  end
+ # end

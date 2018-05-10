@@ -21,13 +21,14 @@ ActiveRecord::Schema.define(version: 20180510153215) do
     t.float    "temp"
     t.integer  "humidity"
     t.datetime "date"
+    t.integer  "batch_id"
   end
 
   create_table "queries", force: :cascade do |t|
     t.string  "city"
     t.string  "country_code"
     t.integer "user_id"
-    t.integer "forecast_id"
+    t.integer "batch_id"
   end
 
   create_table "users", force: :cascade do |t|
