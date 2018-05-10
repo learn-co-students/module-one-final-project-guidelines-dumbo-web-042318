@@ -7,7 +7,7 @@ class WeatherCLI
 
   def run
     welcome
-    new_user = get_user_name
+    @new_user = get_user_name
     city_name = get_city_name
     country_code = get_country_code
     begin
@@ -22,9 +22,13 @@ class WeatherCLI
     @num = get_number_of_days
     create_and_save_forecast(@num)
 
-    Query.create(city: city_name, country_code: country_code, user: new_user, batch: @batch)
+    Query.create(city: city_name, country_code: country_code, user: @new_user, batch: @batch)
 
+    puts "Hi, #{@username}! Here’s the #{@num}-day forecast:"
     display_result(@batch.forecasts)
+
+    fun_info
+
 
   end
 
@@ -78,7 +82,6 @@ class WeatherCLI
   end
 
   def display_result(arr_forecasts_obj)
-    puts "Hi, #{@username}! Here’s the #{@num}-day forecast:"
     arr_forecasts_obj.each do |forecast|
       a = forecast.date_text
       print " Date: "
@@ -87,5 +90,74 @@ class WeatherCLI
       puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     end
   end
+
+  # def exit_question
+  #   puts "For more interesting facts, press y. To exit, press n"
+  #   input = gets.chomp.downcase
+  #   if input == "n"
+  #     exit_message
+  #     # break
+  #   else
+  #     fun_info
+  #   end
+  # end
+  #
+  def exit_message
+    puts "Thank you for using WeatherCLI! Have a nice day!"
+  end
+
+  def fun_info
+    puts "Welcome to fun info!"
+    puts "Enter history to see search history."
+    puts "Enter high to see high of each day of your search."
+    puts "Enter low to see low of each day of your search."
+    puts "Enter x to exit program."
+    input = gets.chomp.downcase
+    case input
+    when "history"
+      history
+      fun_info
+    when "low"
+      min_temp
+      fun_info
+    when "high"
+      high_temp
+      fun_info
+    when 'x'
+      exit_message
+    else
+      fun_info
+    end
+  end
+
+  def history
+    puts "Here's all the forecasts you've searched:"
+    display_result(@new_user.forecasts.last)
+  end
+
+  def order_batch
+    @new_user.forecasts.last.sort_by{|forecast| forecast.temp}
+  end
+
+  def min_temp
+    min = order_batch.first
+    a = min.date_text
+    puts "The coldest day is:"
+    print " Date: "
+    p a
+    puts " Temperature: #{min.temp} F"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  end
+
+  def high_temp
+    max = order_batch.last
+    a = max.date_text
+    puts "The hottest day is:"
+    print " Date: "
+    p a
+    puts " Temperature: #{max.temp} F"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  end
+
 
 end
