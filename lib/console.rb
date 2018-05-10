@@ -210,7 +210,7 @@ class Menu
     puts "2. Show All questions/answers/links/tags"
     puts "3. Show all question by tag"
     puts "4. Delete a question/answer/link/tag"
-    puts "Press q to exit"
+    puts "Enter q to exit"
   end
 
   def self.new_link_or_tag_y_n(option)
@@ -270,22 +270,17 @@ def run
       when "1"
         MenuCommands.make_new_q_a_l_t
       when "2"
-        puts "Here are all your questions, answers, links, and tags!"
         Interface.list_everything
       when "3"
         Interface.list_all_tags
-        puts "enter the number of the tag to see the questions linked to them"
+        puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
         choice = gets.strip
-        Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
+        choice.to_i == 0 ? "" : Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
       when "4"
-        puts "enter the number of the question/answer/link/tag you want to delete"
         Interface.all_questions_with_answers
+        puts "enter the number of the question/answer/link/tag you want to delete, or enter any letter to go back"
         choice = gets.strip
-        if choice.to_i != 0
-          Interface.destroy_question_answer_links_tags(choice.to_i)
-        else
-          break
-        end
+        choice.to_i == 0 ? break : Interface.destroy_question_answer_links_tags(choice.to_i)
       when "q"
         puts "bye!"
         break
