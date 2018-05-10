@@ -22,13 +22,6 @@ def main_options
     list_options(options)
 end 
 
-def users 
-    User.all.each do |user|
-        binding.pry
-        puts user 
-    end 
-end
-
 def state_info_options
     options = [
         "-I want to know which states I can chief my herbs",
@@ -40,7 +33,7 @@ def state_info_options
 end 
 
 def new_prompt
-    sleep 2
+    sleep 5
     puts "Select another option, bromigo or ask the same thing?? I don't care!"
     sleep 1
 end
@@ -62,6 +55,7 @@ end
 
 def list_all_locations
     puts "These states are all chill"
+    sleep 2
     Location.all.each do |location|
         puts location.name
         sleep 1
@@ -72,6 +66,7 @@ def grow
     puts "Get your gardens ready, dudes and dudettes!"
     sleep 1
     puts "You can start your herb havens here:"
+    sleep 2
     Location.all.select do |location|
         location.legal_to_grow == true
     end.each do |instance|
@@ -127,7 +122,8 @@ def options_choice(user_answer)
                 elsif user_state_option.include?("grow")
                     grow
                     new_prompt  
-                elsif user_state_option.include?("possess")    
+                elsif user_state_option.include?("possess") 
+                    sleep 1   
                     possession
                     new_prompt
                 elsif user_state_option.include?("legal")
@@ -140,11 +136,11 @@ def options_choice(user_answer)
             end
         when "book a trip"
             user_instance = []
-            if user_check == nil 
+            if User.all == user_instance || user_check == nil 
                 puts "You're not a member of this village. Let's create a new blazer!"
                 new_blazer
             else
-                user_instance = user_check
+                user_instance << user_check
             end
             puts "choose a destination, brosaurus"
             sleep 2
