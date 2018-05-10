@@ -180,6 +180,11 @@ class Interface
     tag_answer.destroy
   end
 
+  def self.destroy_tag_from_all(tag)
+    TagAnswer.where("tag_id = ?", tag[:id]).destroy_all
+    tag.destroy
+  end
+
 
   # not for user, eventually private
   def self.set_link_answer(link, answer)
