@@ -212,6 +212,56 @@ class Menu
     puts "4. Delete a question/answer/link/tag"
     puts "Press q to exit"
   end
+
+  def self.new_link_tag_y_n(option)
+    puts "would you like to add a #{option}?"
+    puts "y/n (lowercase, just the letter)"
+  end
+end
+
+class MenuCommands
+  def self.yes_no_loop
+    loop do
+      choice = gets.strip.downcase
+      if choice == "y"
+        return true
+      elsif choice == "n"
+        return false
+      else
+        puts "sorry, didn't get that, try again. y or n"
+      end
+    end
+  end
+
+  def self.command1
+    new_question = Interface.set_question
+    new_answer = Interface.set_answer(new_question)
+    loop do
+      Menu.new_link_tag_y_n("link")
+      self.yes_no_loop ? Interface.set_link(new_answer) : break
+    end
+    loop do
+      Menu.new_link_tag_y_n("tag")
+      choice = gets.strip.downcase
+      if choice == "y"
+        Interface.list_all_tags
+        puts "enter the number of the tag to add it"
+        puts "or type in a new tag and press enter"
+        choice = gets.strip.downcase
+        if choice.to_i == 0
+          new_tag = Interface.create_new_tag(choice)
+          Interface.create_tag_answer(new_tag, new_answer)
+        else
+          num_tag = Tag.all[choice.to_i - 1]
+          Interface.create_tag_answer(num_tag, new_answer)
+        end
+      else
+        break
+      end
+    end
+  # end of method
+  end
+  # end of class
 end
 
 def run
@@ -221,38 +271,7 @@ def run
     choice = gets.strip
     case choice
       when "1"
-        new_question = Interface.set_question
-        new_answer = Interface.set_answer(new_question)
-        loop do
-          puts "Would you like to add a link?"
-          puts "y/n (lowecase, just the letter)"
-          choice = gets.strip.downcase
-          if choice == "y"
-            Interface.set_link(new_answer)
-          else
-            break
-          end
-        end
-        loop do
-          puts "would you like to add a tag?"
-          puts "y/n (lowecase, just the letter)"
-          choice = gets.strip.downcase
-          if choice == "y"
-            Interface.list_all_tags
-            puts "enter the number of the tag to add it"
-            puts "or type in a new tag and press enter"
-            choice = gets.strip.downcase
-            if choice.to_i == 0
-              new_tag = Interface.create_new_tag(choice)
-              Interface.create_tag_answer(new_tag, new_answer)
-            else
-              num_tag = Tag.all[choice.to_i - 1]
-              Interface.create_tag_answer(num_tag, new_answer)
-            end
-          else
-            break
-          end
-        end
+        MenuCommands.command1
       when "2"
         puts "Here are all your questions, answers, links, and tags!"
         Interface.list_everything
