@@ -20,7 +20,7 @@ end
 def main_options
     options = [
         "- CREATE BLAZER : create a new blazer profile and book a trip my dude!",
-        "- STATE INFO BRO : displays a list questions",
+        "- STATE INFO BRO : displays a list of questions",
         "- BOOK A TRIP : books that trip we talked about earlier brosef!",
         "- EXIT : exits this program"]
     list_options(options)
@@ -37,7 +37,7 @@ def state_info_options
 end 
 
 def new_prompt
-    sleep 5
+    sleep 3
     puts "Select another option, bromigo or ask the same thing?? I don't care!"
     sleep 1
 end
@@ -104,7 +104,7 @@ end
 
 def legal_limitations(state)
     line_spacers
-    destination = Location.find_by(name: state.capitalize)
+    destination = Location.find_by(name: state)
     puts destination.description
     line_spacers
 end
@@ -186,14 +186,20 @@ def options_choice(user_answer)
                     new_prompt
                 elsif user_state_option.include?("legal")
                     puts "Which state you want to know more about, bromeister?"
-                    user_input = gets.chomp.capitalize
-                    if Location.all.any? do |location_instance|
-                            location_instance.name == user_input
+                    loop do   
+                        user_input = gets.chomp
+                        if user_input.include?("DC") 
+                            legal_limitations("Washington, DC")
+                            break
+                        elsif Location.all.any? do |location_instance|
+                                location_instance.name == user_input.capitalize
+                            end 
+                            legal_limitations(user_input.capitalize)
+                            break
+                        else
+                            puts "Sorry, Brofessor X. You put the wrong input."
+                            list_all_locations
                         end
-                        legal_limitations(user_input)
-                    else
-                        puts "Sorry, Brofessor X. You put the wrong input."
-                        list_all_locations
                     end
                     new_prompt
                 end    
@@ -212,7 +218,7 @@ def options_choice(user_answer)
             sleep 2
             list_all_locations
             user_destination = gets.chomp.capitalize
-            puts "when you wanna go?"
+            puts "Enter a date and we'll get you sky high in two ways!"
             trip_date = gets.chomp
             book_a_trip(user_destination, trip_date, user_instance)
         when "exit"
