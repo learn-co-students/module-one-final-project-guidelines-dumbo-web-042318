@@ -53,7 +53,16 @@ class Interface
     arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
   end
 
+
   # gets and prints out various combos of q's, a's, and links
+
+  def self.list_all_tags
+    tags = Tag.all
+    tags.each_with_index do |tag,i|
+      print "#{i+1}. #{tag.t_content} | "
+      puts "\n" if (i+1) % 5 == 0
+    end
+  end
 
   def self.all_questions_with_answers
     arr = self.get_all_answered_questions
