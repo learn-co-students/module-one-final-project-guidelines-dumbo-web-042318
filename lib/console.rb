@@ -213,11 +213,13 @@ class Menu
     puts "Press q to exit"
   end
 
-  def self.new_link_tag_y_n(option)
+  def self.new_link_or_tag_y_n(option)
     puts "would you like to add a #{option}?"
     puts "y/n (lowercase, just the letter)"
   end
 end
+
+
 
 class MenuCommands
   def self.yes_no_loop
@@ -233,29 +235,24 @@ class MenuCommands
     end
   end
 
-  def self.command1
+  def self.make_new_q_a_l_t
     new_question = Interface.set_question
     new_answer = Interface.set_answer(new_question)
+    # make links
     loop do
-      Menu.new_link_tag_y_n("link")
+      Menu.new_link_or_tag_y_n("link")
       self.yes_no_loop ? Interface.set_link(new_answer) : break
     end
+    # make tags
     loop do
-      Menu.new_link_tag_y_n("tag")
-      choice = gets.strip.downcase
-      if choice == "y"
+      Menu.new_link_or_tag_y_n("tag")
+      if self.yes_no_loop
         Interface.list_all_tags
-        puts "enter the number of the tag to add it"
-        puts "or type in a new tag and press enter"
+        puts "enter the number of the tag to add it\nor type in a new tag and press enter"
         choice = gets.strip.downcase
-        if choice.to_i == 0
-          new_tag = Interface.create_new_tag(choice)
-          Interface.create_tag_answer(new_tag, new_answer)
-        else
-          num_tag = Tag.all[choice.to_i - 1]
-          Interface.create_tag_answer(num_tag, new_answer)
-        end
-      else
+        tag = (choice.to_i == 0) ? Interface.create_new_tag(choice) : Tag.all[choice.to_i - 1]
+        Interface.create_tag_answer(tag, new_answer)
+      else # choice = false
         break
       end
     end
@@ -271,7 +268,7 @@ def run
     choice = gets.strip
     case choice
       when "1"
-        MenuCommands.command1
+        MenuCommands.make_new_q_a_l_t
       when "2"
         puts "Here are all your questions, answers, links, and tags!"
         Interface.list_everything
