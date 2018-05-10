@@ -24,7 +24,6 @@ class WeatherCLI
 
     Query.create(city: city_name, country_code: country_code, user: @new_user, batch: @batch)
 
-    puts "Hi, #{@username}! Here’s the #{@num}-day forecast:"
     display_result(@batch.forecasts)
 
     fun_info
@@ -82,6 +81,8 @@ class WeatherCLI
   end
 
   def display_result(arr_forecasts_obj)
+    puts "Hi, #{@username}! Here’s the #{@num}-day forecast:"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     arr_forecasts_obj.each do |forecast|
       a = forecast.date_text
       print " Date: "
@@ -91,17 +92,6 @@ class WeatherCLI
     end
   end
 
-  # def exit_question
-  #   puts "For more interesting facts, press y. To exit, press n"
-  #   input = gets.chomp.downcase
-  #   if input == "n"
-  #     exit_message
-  #     # break
-  #   else
-  #     fun_info
-  #   end
-  # end
-  #
   def exit_message
     puts "Thank you for using WeatherCLI! Have a nice day!"
   end
@@ -142,6 +132,7 @@ class WeatherCLI
   def min_temp
     min = order_batch.first
     a = min.date_text
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     puts "The coldest day is:"
     print " Date: "
     p a
@@ -152,6 +143,7 @@ class WeatherCLI
   def high_temp
     max = order_batch.last
     a = max.date_text
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     puts "The hottest day is:"
     print " Date: "
     p a

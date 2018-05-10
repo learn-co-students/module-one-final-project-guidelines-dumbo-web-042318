@@ -10,11 +10,40 @@ class WeatherAPIGetter
     @weather_hash
   end
 
+  def calculating_difference
+    lon = (weather_hash["city"]["coord"]["lon"]).abs
+    x = ((lon / 15) + 12).to_i
+    if x > 24
+      x = x - 24
+    end
+
+    case x
+    when (1..4)
+      time = "03:00:00"
+    when (5..7)
+      time = "06:00:00"
+    when (8..10)
+      time = "09:00:00"
+    when (11..13)
+      time = "12:00:00"
+    when (14..16)
+      time = "15:00:00"
+    when (17..19)
+      time = "18:00:00"
+    when (20..22)
+      time = "21:00:00"
+    else
+      time = "00:00:00"
+    end
+
+  end
+
   def weekly_arr # 5 instances of hrly temp at 12pm
+    x = calculating_difference
     weekly_arr=[]
-    weekly_arr << weather_hash["list"][0]
+    # weekly_arr << weather_hash["list"][0]
     weather_hash["list"].each do |hourly|
-     if  hourly["dt_txt"].include?("12:00:00")
+     if hourly["dt_txt"].include?(x)
         weekly_arr << hourly
      end
     end
