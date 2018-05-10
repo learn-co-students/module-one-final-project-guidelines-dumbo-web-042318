@@ -169,25 +169,29 @@ class Interface
   end
 
   def self.destroy_question(question)
-    question.destroy
+    question.destroy if question
   end
 
   def self.destroy_answer(question)
-    question.answer.destroy
+    question.answer.destroy if question.answer
   end
 
   def self.destroy_links(question)
-    question.answer.links.each { |link| link.destroy }
+    question.answer.links.each { |link| link.destroy } if question.answer
   end
 
   def self.destroy_tag_from_answer(tag,answer)
-    tag_answer = TagAnswer.where("tag_id = ? AND answer_id = ?", tag[:id], answer[:id])[0]
-    tag_answer.destroy
+    if answer
+      tag_answer = TagAnswer.where("tag_id = ? AND answer_id = ?", tag[:id], answer[:id])[0]
+      tag_answer.destroy
+    end
   end
 
   def self.destroy_all_tags_from_question(question)
-    tags = question.answer.tags
-    tags.each { |tag| self.destroy_tag_from_answer(tag,question.answer) }
+    if question.answer
+      tags = question.answer.tags
+      tags.each { |tag| self.destroy_tag_from_answer(tag,question.answer) }
+    end
   end
 
   def self.destroy_tag_from_all(tag)
@@ -219,9 +223,20 @@ class Menu
   end
 end
 
+class TerminalUtilities
+  def self.pause_terminal_clear
+    puts "scroll up to see all entries, enter any key to go back"
+    choice = gets
+  end
 
+  def self.nicely_clear_terminal
+    puts "\n" * 200
+    puts `clear`
+  end
+end
 
 class MenuCommands
+  # utility commands
   def self.yes_no_loop
     loop do
       choice = gets.strip.downcase
@@ -235,16 +250,7 @@ class MenuCommands
     end
   end
 
-  def self.pause_terminal_clear
-    puts "scroll up to see all entries, enter any key to go back"
-    choice = gets
-  end
-
-  def self.nicely_clear_terminal
-    puts "\n" * 200
-    puts `clear`
-  end
-
+  # main run methods
   def self.start
     puts `clear`
     Menu.main_menu_options
@@ -275,22 +281,23 @@ class MenuCommands
         break
       end
     end
-  # end of method
   end
+
   def self.show_everything
-    self.nicely_clear_terminal
+    TerminalUtilities.nicely_clear_terminal
     Interface.list_everything
-    MenuCommands.pause_terminal_clear
+    TerminalUtilities.pause_terminal_clear
   end
 
   def self.pick_tag_questions_by_number
     Interface.list_all_tags
     puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
     choice = gets.strip
-    self.nicely_clear_terminal
+    TerminalUtilities.nicely_clear_terminal
     choice.to_i == 0 ? "" : Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
-    MenuCommands.pause_terminal_clear
+    TerminalUtilities.pause_terminal_clear
   end
+
   def self.delete_q_a_l_t
     Interface.all_questions_with_answers
     puts "enter the number of the question/answer/link/tag you want to delete, or enter any letter to go back"
