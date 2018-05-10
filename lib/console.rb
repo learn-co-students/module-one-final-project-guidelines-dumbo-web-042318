@@ -67,9 +67,12 @@ class Interface
   def self.list_questions_by_tag(tag)
     arr = self.get_all_answered_questions
     arr.each_with_index do |question, i|
-      if question.answer.tags.include?(tag.t_content)
-        puts question.question 
-        puts question.answer.tags
+      if question.answer.tags.include?(tag)
+        puts "#{i+1} #{question.question}"
+        puts "- #{question.answer.answer}"
+        puts "TAGS: "
+        question.answer.tags.each {|tag| print tag.t_content + ' | '}
+        puts "\n\n"
       end
     end
   end
