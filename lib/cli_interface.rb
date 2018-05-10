@@ -19,19 +19,19 @@ end
 
 def main_options
     options = [
-        "- create blazer : create a new blazer profile and book a trip my dude!",
-        "- state info bro : displays a list questions",
-        "- book a trip : books that trip we talked about earlier brosef!",
-        "- exit : exits this program"]
+        "- CREATE BLAZER : create a new blazer profile and book a trip my dude!",
+        "- STATE INFO BRO : displays a list questions",
+        "- BOOK A TRIP : books that trip we talked about earlier brosef!",
+        "- EXIT : exits this program"]
     list_options(options)
 end 
 
 def state_info_options
     options = [
-        "-I want to know which states I can chief my herbs",
-        "-I want to know what states you can grow in",
-        "-How much can I possess in a state?",
-        "-What are the legal limitations",
+        "-Which states can I chief my herbs?",
+        "-Where can I grow my devil's lettuce?",
+        "-How much tree can I have?",
+        "-What are the legal limitations?",
         "-Hit that rewind button!"]
     list_options(options)
 end 
@@ -43,7 +43,7 @@ def new_prompt
 end
 
 def blazer_prompt
-    user_input = gets.chomp
+    user_input = gets.chomp.downcase
     if user_input.include?("ye")
         new_blazer
     elsif user_input.chars.first == "n"
@@ -141,7 +141,7 @@ def user_check
 end
 
 def options_choice(user_answer)
-    case user_answer
+    case user_answer.downcase
         when "create blazer"
             puts "You ready to dive into that brocean, Broseidon?"
             blazer_prompt
@@ -169,7 +169,7 @@ def options_choice(user_answer)
             # end
         when "state info bro"
             line_spacers
-            puts "choose an option :"
+            puts "Try asking a question like these :"
             loop do 
                 state_info_options
                 user_state_option = gets.chomp
@@ -180,14 +180,21 @@ def options_choice(user_answer)
                 elsif user_state_option.include?("grow")
                     grow
                     new_prompt  
-                elsif user_state_option.include?("possess") 
+                elsif user_state_option.include?("how much") || user_state_option.include?("have")
                     sleep 1   
                     possession
                     new_prompt
                 elsif user_state_option.include?("legal")
                     puts "Which state you want to know more about, bromeister?"
-                    user_input = gets.chomp
-                    legal_limitations(user_input)
+                    user_input = gets.chomp.capitalize
+                    if Location.all.any? do |location_instance|
+                            location_instance.name == user_input
+                        end
+                        legal_limitations(user_input)
+                    else
+                        puts "Sorry, Brofessor X. You put the wrong input."
+                        list_all_locations
+                    end
                     new_prompt
                 end    
                 break if user_state_option.include?("rewind")
