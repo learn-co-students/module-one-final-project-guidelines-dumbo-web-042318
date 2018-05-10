@@ -4,7 +4,7 @@ class CreateQueries < ActiveRecord::Migration[5.0]
       t.string :city
       t.string :country_code
       t.integer :user_id
-      # t.integer :forecast_id
+       # t.integer :forecast_id
       t.integer :batch_id
     end
   end
