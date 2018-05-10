@@ -20,10 +20,8 @@ class Interface
     set_link_answer(link, answer)
   end
 
-  def self.create_new_tag
-    puts "What's your new tag?"
-    input_tag = gets.strip
-    Tag.create(t_content: input_tag)
+  def self.create_new_tag(tag_name)
+    Tag.create(t_content: tag_name)
   end
 
   def self.create_tag_answer(tag, answer)
@@ -222,6 +220,26 @@ def run
           choice = gets.strip.downcase
           if choice == "y"
             Interface.set_link(new_answer)
+          else
+            break
+          end
+        end
+        loop do
+          puts "would you like to add a tag?"
+          puts "y/n (lowecase, just the letter)"
+          choice = gets.strip.downcase
+          if choice == "y"
+            Interface.list_all_tags
+            puts "enter the number of the tag to add it"
+            puts "or type in a new tag and press enter"
+            choice = gets.strip.downcase
+            if choice.to_i == 0
+              new_tag = Interface.create_new_tag(choice)
+              Interface.create_tag_answer(new_tag, new_answer)
+            else
+              num_tag = Tag.all[choice.to_i - 1]
+              Interface.create_tag_answer(num_tag, new_answer)
+            end
           else
             break
           end
