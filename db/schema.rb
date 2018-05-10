@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 3) do
     t.string   "name"
     t.boolean  "legal_to_grow"
     t.integer  "legal_age"
-    t.string   "legal_to_possess"
+    t.float    "legal_to_possess"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
