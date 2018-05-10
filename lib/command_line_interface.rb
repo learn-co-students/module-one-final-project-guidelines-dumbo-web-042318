@@ -2,8 +2,8 @@
 class WeatherCLI
   # def gimme_city # gets city from User
   #   puts "Which city would you like to view weather for? Please enter city."
-  # end
-  @@id=Forecast.last.id
+  # en
+
   def initialize
     @instance_of_weatherapigetter = WeatherAPIGetter.new
   end
@@ -14,15 +14,13 @@ class WeatherCLI
     city_name = get_city_name
     country_code = get_country_code
     @weekly_arr = get_forecast_from_api(city_name, country_code)
+    @batch = Batch.new
+    @num = get_number_of_days
+    create_and_save_forecast(@num)
 
-    create_and_save_forecast(get_num_days)
+    Query.create(city: city_name, country_code: country_code, user: new_user, batch: @batch)
 
-    new_query = Query.create(city: city_name, country_code: country_code, user: new_user)
-    a = Forecast.last
-
-    new_query.update(forecast: a)
-
-    display_result
+    display_result(@batch.forecasts)
 
   end
 
@@ -45,8 +43,8 @@ class WeatherCLI
 
   def get_user_name # gets user name
     puts "What is your name?"
-    username = gets.chomp
-    new_user = User.find_or_create_by(name: username)
+    @username = gets.chomp
+    new_user = User.find_or_create_by(name: @username)
     new_user
   end
 
@@ -64,11 +62,19 @@ class WeatherCLI
     @instance_of_weatherapigetter.get_weather_forecast(city_name, country_code)
   end
 
+  def get_number_of_days
+    puts "How many days of weather? You can choose from 1 to 5 days."
+    num = gets.chomp.to_i
+  end
+
+  def self.id
+    @@id
+  end
+
   def create_and_save_forecast(num)
     i = 0
-
      while i < num
-      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date: date_key_hash(i)["date"])
+      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date: date_key_hash(i)["date"], batch: @batch)
        i += 1
      end
   end
@@ -80,9 +86,13 @@ class WeatherCLI
     date_key_hash = new_key.merge(new_date)
   end
 
-  def display_result
-    puts "Hi #{User.last.name}, the temperature in #{Query.last.city}, #{Query.last.country_code} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
-  end
+  def display_result(arr_forecasts_obj)
+    # puts "Hi #{@username}, the temperature in #{Query.last.city}, #{Query.last.country_code} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
+    puts "Hi, #{@username}! Here’s the #{@num} day forecast:"
+    arr_forecasts_obj.each do |forecast|
+      puts "Date: #{forecast.date} \n Temperature: #{forecast.temp} F \n Humidity: #{forecast.humidity}%"
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+      end
+    end
 
-
- end
+end

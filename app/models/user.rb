@@ -1,20 +1,13 @@
 class User < ActiveRecord::Base
   has_many :queries
-  has_many :forecasts, through: :queries
+  has_many :batches, through: :queries
 
-  def city_name
-    a = gets.chomp.downcase
-    # binding.pry
-    a
+  def forecasts
+    my_forecasts = []
+    batches.each do |batch|
+      my_forecasts << batch.forecasts
+    end
+    my_forecasts
   end
-
-  def gimme_cc # gets country code
-     a = gets.chomp.downcase
-     a
-  end
-
-  # def create_query(city, country_code)
-  #   Query.create(city: city, country_code: country_code, user: self)
-  # end
 
 end

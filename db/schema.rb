@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509162923) do
+ActiveRecord::Schema.define(version: 20180510153215) do
+
+  create_table "batches", force: :cascade do |t|
+    t.string  "name"
+    t.integer "query_id"
+  end
 
   create_table "forecasts", force: :cascade do |t|
     t.float    "temp"
