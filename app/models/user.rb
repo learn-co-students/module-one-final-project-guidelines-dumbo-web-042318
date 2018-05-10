@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :queries
-  has_many :forecasts, through: :queries
+  has_many :forecasts, through: :queries, :foreign_key => "batch_id"
 
   def city_name
     a = gets.chomp.downcase

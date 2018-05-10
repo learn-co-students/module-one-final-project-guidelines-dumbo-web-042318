@@ -3,6 +3,8 @@ class WeatherCLI
   # def gimme_city # gets city from User
   #   puts "Which city would you like to view weather for? Please enter city."
   # end
+  @@id = Forecast.last.batch_id.to_i + 1
+
   def initialize
     @instance_of_weatherapigetter = WeatherAPIGetter.new
   end
@@ -13,13 +15,14 @@ class WeatherCLI
     city_name = get_city_name
     country_code = get_country_code
     @weekly_arr = get_forecast_from_api(city_name, country_code)
-
-    create_and_save_forecast
+    num = get_number_of_days
+    create_and_save_forecast(num)
 
     new_query = Query.create(city: city_name, country_code: country_code, user: new_user)
-    a = Forecast.last
+    a = Forecast.last.batch_id
 
-    new_query.update(forecast: a)
+    new_query.update(batch_id: a)
+
 
     display_result
 
@@ -50,12 +53,21 @@ class WeatherCLI
     @instance_of_weatherapigetter.get_weather_forecast(city_name, country_code)
   end
 
-  def create_and_save_forecast
+  def get_number_of_days
+    puts "How many days of weather? You can choose from 1 to 5 days."
+    num = gets.chomp.to_i
+  end
+
+  def self.id
+    @@id
+  end
+
+  def create_and_save_forecast(num)
     i = 0
-    # while i < 5
-      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date: date_key_hash(i)["date"])
-      # i += 1
-    # end
+     while i < num
+      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date: date_key_hash(i)["date"], batch_id: @@id)
+       i += 1
+     end
   end
 
   def date_key_hash(index)#cleanup?
