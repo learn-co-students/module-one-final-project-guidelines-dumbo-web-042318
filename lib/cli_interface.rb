@@ -7,11 +7,10 @@ def welcome
 end 
 
 def line_spacers
-    puts "------"
+    puts "-------------------------"
 end 
 
 def list_options(options)
-    line_spacers
     options.each do |option|
         puts option
         sleep 1
@@ -43,6 +42,17 @@ def new_prompt
     sleep 1
 end
 
+def blazer_prompt
+    user_input = gets.chomp
+    if user_input.include?("ye")
+        new_blazer
+    elsif user_input.chars.first == "n"
+        puts "ok bromenheimerschmitz, we can do it later.."
+    else
+        puts "Say yea or negatory or something, bro. It'd be alot cooler if you did."
+    end
+end
+
 def new_blazer
     puts "Enter your name"
     user_name = gets.chomp
@@ -54,8 +64,9 @@ def new_blazer
 end
 
 def create_blazer(name, age, home_state)
-    User.create(name: name, age: age, home_state: home_state)
+    new_user = User.create(name: name, age: age, home_state: home_state)
     puts "Welcome #{name}, glad to have you along the chieftan trail!"
+    new_user
 end 
 
 def list_all_locations
@@ -99,36 +110,41 @@ def legal_limitations(state)
 end
 
 def book_a_trip(destination, date, user)
-    new_trip = FourTwentyTrip.new(:date_of_trip => date)
-    new_trip.location = Location.find_by(:name => destination)
+    new_trip = FourTwentyTrip.create(date_of_trip: date)
+    new_trip.location = Location.find_by(name: destination)
     user.four_twenty_trips << new_trip
     puts "Have a totally bodacious trip to #{new_trip.location.name}, #{user.name}!"
 end
 
 def user_check
-    puts "Is this you, Chieftan #{User.all.last.name}?"
+    if User.all != []
+    puts "Is this you, chieftan #{User.all.last.name}?"
     ##this puts statement happens twice if user_input is 'yes', but after second 'yes', it works
     user_input = gets.chomp 
-    if user_input.include?("ye")
-        puts "Great brometheus, let's book that trip!"
-        return User.all.last
-    elsif user_input.include?("n")
-        puts "I'm totally spacing, bro. Whats your name again?"
-        user_name = gets.chomp.capitalize 
-        user = User.find_by(name: user_name)
-        if user
-            puts "My bad, brobro. Let's book your trip, chieftan #{user.name}!"
-            return user
-        else
-            return nil
+        if user_input.include?("ye")
+            puts "Great brometheus, let's book that trip!"
+            return User.all.last
+        elsif user_input.include?("n")
+            puts "I'm totally spacing, bro. Whats your name again?"
+            user_name = gets.chomp.capitalize 
+            user = User.find_by(name: user_name)
+            if user
+                puts "My bad, brobro. Let's book your trip, chieftan #{user.name}!"
+                return user
+            else
+                return nil
+            end
         end
+    else
+        return nil
     end
 end
 
 def options_choice(user_answer)
     case user_answer
         when "create blazer"
-            new_blazer
+            puts "You ready to dive into that brocean, Broseidon?"
+            blazer_prompt
             ##THIS WAS TRYING TO ADD A BOOK_A_TRIP PATH DIRECTLY AFTER NEW_BLAZER WAS MADE...NOT WORKING THO.
             # new_blazer_instance = new_blazer
             # ##new_blazer_instance == nil...even tho new_blazer runs fine...por que?
@@ -157,6 +173,7 @@ def options_choice(user_answer)
             loop do 
                 state_info_options
                 user_state_option = gets.chomp
+                line_spacers
                 if user_state_option.include?("herb")
                     list_all_locations
                     new_prompt
@@ -176,18 +193,18 @@ def options_choice(user_answer)
                 break if user_state_option.include?("rewind")
             end
         when "book a trip"
-            user_instance = []
-            if User.all == user_instance || user_check == nil 
-                puts "You're not a member of this village. Let's create a new blazer!"
-                new_blazer
+            user_instance = user_check
+            if user_instance != nil 
+                user_instance
             else
-                user_instance << user_check
+                puts "You're not a member of this village. You down to make a new blazer?"
+                user_instance = blazer_prompt
             end
             ##this again...turn this into #booking_prompt ?
             puts "Choose a destination, brosaurus"
             sleep 2
             list_all_locations
-            user_destination = gets.chomp
+            user_destination = gets.chomp.capitalize
             puts "when you wanna go?"
             trip_date = gets.chomp
             book_a_trip(user_destination, trip_date, user_instance)
@@ -204,7 +221,7 @@ def four_twenty_tripster_cli_interface
         puts "Well stay chill bromenheim, til the next episode!"
     elsif begin_answer == "for sure"
         line_spacers
-        puts "Follow these commands to start your journey:"
+        puts "Follow these commands to start your journey :"
         sleep 1
         loop do
             main_options
