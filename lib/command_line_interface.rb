@@ -38,7 +38,7 @@ class WeatherCLI
 
   def get_city_name
     puts "Which city would you like to view weather for? Please enter city."
-    city_name = gets.chomp.downcase
+    city_name = gets.chomp
   end
 
   def get_country_code
@@ -66,7 +66,7 @@ class WeatherCLI
   end
 
   def display_result
-    puts "The temperature in #{Query.last.city} is #{Forecast.last.temp} F"
+    puts "Hi #{User.last.name}, the temperature in #{Query.last.city} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
   end
 
 
