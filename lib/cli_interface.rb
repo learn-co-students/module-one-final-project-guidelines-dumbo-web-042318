@@ -6,7 +6,12 @@ def welcome
     puts "Would you like to begin your trip? (for sure / nah brah)"
 end 
 
+def line_spacers
+    puts "------"
+end 
+
 def list_options(options)
+    line_spacers
     options.each do |option|
         puts option
         sleep 1
@@ -61,23 +66,25 @@ def create_blazer(name, age, home_state)
 end 
 
 def list_all_locations
-    puts "These states are all chill"
+    puts "These states are all chill :"
     Location.all.each do |location|
-        puts location.name
+        puts "-#{location.name}"
         sleep 1
     end 
+    line_spacers
 end
 
 def grow
     puts "Get your gardens ready, dudes and dudettes!"
     sleep 1
-    puts "You can start your herb havens here:"
+    puts "You can start your herb havens here :"
     Location.all.select do |location|
         location.legal_to_grow == true
     end.each do |instance|
        puts instance.name 
        sleep 1
     end
+    line_spacers
 end 
 
 def possession
@@ -86,15 +93,26 @@ def possession
         puts "#{location.legal_to_possess} oz in #{location.name}"
         sleep 1
     end
+    line_spacers
 end
 
 def legal_limitations(state)
+    line_spacers
     destination = Location.find_by(name: state.capitalize)
     puts destination.description
+    line_spacers
+end
+
+def book_a_trip(destination, date, user)
+    new_trip = FourTwentyTrip.new(:date_of_trip => date)
+    new_trip.location = Location.find_by(:name => destination)
+    user.four_twenty_trips << new_trip
+    puts "Have a totally bodacious trip to #{new_trip.location.name}, #{user.name}!"
 end
 
 def user_check
     puts "Is this you, Chieftan #{User.all.last.name}?"
+    ##this puts statement happens twice if user_input is 'yes', but after second 'yes', it works
     user_input = gets.chomp 
     if user_input.include?("ye")
         puts "Great brometheus, let's book that trip!"
@@ -116,7 +134,30 @@ def options_choice(user_answer)
     case user_answer
         when "create blazer"
             new_blazer
+            ##THIS WAS TRYING TO ADD A BOOK_A_TRIP PATH DIRECTLY AFTER NEW_BLAZER WAS MADE...NOT WORKING THO.
+            # new_blazer_instance = new_blazer
+            # ##new_blazer_instance == nil...even tho new_blazer runs fine...por que?
+            # binding.pry
+            # line_spacers
+            # puts "Wanna just book a trip right now?! "
+            # booking_response = gets.chomp
+            # if booking_response.include?("ye") || booking_response.include?("for sure")
+            #     ##maybe make a method for this book--'booking prompt?'
+            #     puts "Choose a destination, brosaurus"
+            #     sleep 2
+            #     list_all_locations
+            #     user_destination = gets.chomp
+            #     puts "when you wanna go?"
+            #     trip_date = gets.chomp
+            #     binding.pry
+            #     ##issue here, taking this path, new_blazer_instance returns nil, even tho new_blazer method above seemed to work
+            #     book_a_trip(user_destination, trip_date, new_blazer_instance)
+            # else
+            #     puts "That's chill, welcome to the squad!"
+            #     line_spacers
+            # end
         when "state info bro"
+            line_spacers
             puts "choose an option :"
             loop do 
                 state_info_options
@@ -146,31 +187,27 @@ def options_choice(user_answer)
             else
                 user_instance = user_check
             end
-            puts "choose a destination, brosaurus"
+            ##this again...turn this into #booking_prompt ?
+            puts "Choose a destination, brosaurus"
             sleep 2
             list_all_locations
             user_destination = gets.chomp
             puts "when you wanna go?"
             trip_date = gets.chomp
-            book_a_trip(user_input, trip_date)
+            book_a_trip(user_destination, trip_date, user_instance)
         when "exit"
-            puts "see you next time, brochacho!"
+            puts "SEE YOU NEXT TIME, BROCHACHO!"
     end
 end 
 
-def book_a_trip(destination)
-    new_trip = ForTwentyTrip.new()
-    new_trip.location = Location.find_by(:name => "#{state}")
-    user.fourtwentytrips << new_trip
-    puts "Have an awesome trip to #{new_trip.location.name}, #{name}"
-end
 
 def four_twenty_tripster_cli_interface
    welcome 
    begin_answer = gets.chomp
     if begin_answer == "nah brah"
-        puts "well stay chill bromenheim, til the next episode"
+        puts "Well stay chill bromenheim, til the next episode!"
     elsif begin_answer == "for sure"
+        line_spacers
         puts "Follow these commands to start your journey:"
         sleep 1
         loop do
