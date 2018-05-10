@@ -1,2 +1,5 @@
-require_relative 'config/environment'
+require_relative '../config/environment.rb'
 
+WeatherCLI.new.run
+binding.pry
+true
