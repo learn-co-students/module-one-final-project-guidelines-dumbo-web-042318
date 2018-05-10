@@ -151,21 +151,25 @@ class Interface
 
   def self.destroy_links(index_from_menu)
     question = self.question_object_from_menu(index_from_menu)
-    self.destroy_question(question)
+    self.destroy_question(question) if question
   end
 
   def self.destroy_answer_links(index_from_menu)
     question = self.question_object_from_menu(index_from_menu)
-    self.destroy_links(question)
-    self.destroy_answer(question)
+    if question
+      self.destroy_links(question)
+      self.destroy_answer(question)
+    end
   end
 
   def self.destroy_question_answer_links_tags(index_from_menu)
     question = self.question_object_from_menu(index_from_menu)
-    self.destroy_all_tags_from_question(question)
-    self.destroy_links(question)
-    self.destroy_answer(question)
-    self.destroy_question(question)
+    if question
+      self.destroy_all_tags_from_question(question)
+      self.destroy_links(question)
+      self.destroy_answer(question)
+      self.destroy_question(question)
+    end
   end
 
   def self.destroy_question(question)
@@ -195,8 +199,10 @@ class Interface
   end
 
   def self.destroy_tag_from_all(tag)
-    TagAnswer.where("tag_id = ?", tag[:id]).destroy_all
-    tag.destroy
+    if tag
+      TagAnswer.where("tag_id = ?", tag[:id]).destroy_all
+      tag.destroy
+    end
   end
 
 
@@ -299,8 +305,9 @@ class MenuCommands
   end
 
   def self.delete_q_a_l_t
-    Interface.all_questions_with_answers
-    puts "enter the number of the question/answer/link/tag you want to delete, or enter any letter to go back"
+    Interface.list_questions(Interface.get_all_questions)
+    puts "enter the number of the question you want to delete."
+    puts "You will also delete the accompanying answer, links, and tags.\nEnter any letter to go back"
     choice = gets.strip
     choice.to_i == 0 ? "" : Interface.destroy_question_answer_links_tags(choice.to_i)
   end
