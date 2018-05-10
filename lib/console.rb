@@ -64,6 +64,16 @@ class Interface
     end
   end
 
+  def self.list_questions_by_tag(tag)
+    arr = self.get_all_answered_questions
+    arr.each_with_index do |question, i|
+      if question.answer.tags.include?(tag.t_content)
+        puts question.question 
+        puts question.answer.tags
+      end
+    end
+  end
+
   def self.all_questions_with_answers
     arr = self.get_all_answered_questions
     arr.each_with_index do |question, i|
