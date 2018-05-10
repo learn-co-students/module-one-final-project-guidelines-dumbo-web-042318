@@ -235,6 +235,25 @@ class MenuCommands
     end
   end
 
+  def self.pause_terminal_clear
+    puts "scroll up to see all entries, enter any key to go back"
+    choice = gets
+  end
+
+  def self.nicely_clear_terminal
+    puts "\n" * 200
+    puts `clear`
+  end
+
+  def self.start
+    puts `clear`
+    Menu.main_menu_options
+    puts "what would you like to do?"
+    choice = gets.strip
+    puts `clear`
+    return choice
+  end
+
   def self.make_new_q_a_l_t
     new_question = Interface.set_question
     new_answer = Interface.set_answer(new_question)
@@ -258,29 +277,42 @@ class MenuCommands
     end
   # end of method
   end
-  # end of class
+  def self.show_everything
+    self.nicely_clear_terminal
+    Interface.list_everything
+    MenuCommands.pause_terminal_clear
+  end
+
+  def self.pick_tag_questions_by_number
+    Interface.list_all_tags
+    puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
+    choice = gets.strip
+    self.nicely_clear_terminal
+    choice.to_i == 0 ? "" : Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
+    MenuCommands.pause_terminal_clear
+  end
+  def self.delete_q_a_l_t
+    Interface.all_questions_with_answers
+    puts "enter the number of the question/answer/link/tag you want to delete, or enter any letter to go back"
+    choice = gets.strip
+    choice.to_i == 0 ? "" : Interface.destroy_question_answer_links_tags(choice.to_i)
+  end
 end
+
+
 
 def run
   loop do
-    puts "what would you like to do? "
-    Menu.main_menu_options
-    choice = gets.strip
+    choice = MenuCommands.start
     case choice
       when "1"
         MenuCommands.make_new_q_a_l_t
       when "2"
-        Interface.list_everything
+        MenuCommands.show_everything
       when "3"
-        Interface.list_all_tags
-        puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
-        choice = gets.strip
-        choice.to_i == 0 ? "" : Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
+        MenuCommands.pick_tag_questions_by_number
       when "4"
-        Interface.all_questions_with_answers
-        puts "enter the number of the question/answer/link/tag you want to delete, or enter any letter to go back"
-        choice = gets.strip
-        choice.to_i == 0 ? break : Interface.destroy_question_answer_links_tags(choice.to_i)
+        MenuCommands.delete_q_a_l_t
       when "q"
         puts "bye!"
         break
