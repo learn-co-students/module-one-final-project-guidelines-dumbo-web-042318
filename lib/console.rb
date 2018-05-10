@@ -160,8 +160,9 @@ class Interface
     self.destroy_answer(question)
   end
 
-  def self.destroy_question_answer_links(index_from_menu)
+  def self.destroy_question_answer_links_tags(index_from_menu)
     question = self.question_object_from_menu(index_from_menu)
+    self.destroy_all_tags_from_question(question)
     self.destroy_links(question)
     self.destroy_answer(question)
     self.destroy_question(question)
@@ -184,6 +185,11 @@ class Interface
     tag_answer.destroy
   end
 
+  def self.destroy_all_tags_from_question(question)
+    tags = question.answer.tags
+    tags.each { |tag| self.destroy_tag_from_answer(tag,question.answer) }
+  end
+
   def self.destroy_tag_from_all(tag)
     TagAnswer.where("tag_id = ?", tag[:id]).destroy_all
     tag.destroy
@@ -203,6 +209,7 @@ class Menu
     puts "1. Add question/answer/link/tags"
     puts "2. Show All questions/answers/links/tags"
     puts "3. Show all question by tag"
+    puts "4. Delete a question/answer/link/tag"
     puts "Press q to exit"
   end
 end
@@ -254,6 +261,15 @@ def run
         puts "enter the number of the tag to see the questions linked to them"
         choice = gets.strip
         Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
+      when "4"
+        puts "enter the number of the question/answer/link/tag you want to delete"
+        Interface.all_questions_with_answers
+        choice = gets.strip
+        if choice.to_i != 0
+          Interface.destroy_question_answer_links_tags(choice.to_i)
+        else
+          break
+        end
       when "q"
         puts "bye!"
         break
