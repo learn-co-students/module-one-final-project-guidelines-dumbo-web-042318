@@ -37,9 +37,9 @@ l_5_a_4 = LinkAnswer.create(link: l_5, answer: a_4)
 l_6_a_4 = LinkAnswer.create(link: l_6, answer: a_4)
 
 #tags
-t_1 = Tag.create(t_content: "Ruby")
-t_2 = Tag.create(t_content: "PHP")
-t_3 = Tag.create(t_content: "Flatiron")
+t_1 = Tag.create(t_content: "ruby")
+t_2 = Tag.create(t_content: "php")
+t_3 = Tag.create(t_content: "flatiron")
 
 #tag_answers
 t_1_a_1 = TagAnswer.create(tag: t_1, answer: a_1)

@@ -4,7 +4,8 @@ class Tag < ActiveRecord::Base
 
 #tag
   def self.create_new_tag(tag_name)
-    Tag.create(t_content: tag_name)
+    check = Tag.all.none? { |tag| tag.t_content.downcase == tag_name.downcase }
+    check ? Tag.create(t_content: tag_name) : nil
   end
 
 #tag

@@ -4,7 +4,11 @@ class TagAnswer < ActiveRecord::Base
 
 #tag_answer
   def self.create_tag_answer(tag, answer)
-    TagAnswer.create(tag: tag, answer: answer)
+    if tag 
+      TagAnswer.create(tag: tag, answer: answer) 
+    else
+     puts "you already made that tag!"
+    end
   end
 
   #tag_answer
