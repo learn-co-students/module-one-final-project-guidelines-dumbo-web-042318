@@ -24,6 +24,7 @@ class CommandLineInterface
       puts "Type 2 to add a new location" #Create
       puts "Type 3 to remove a location" #Delete
       puts "Type 4 to create showtime"
+      puts "Type 5 to update movie rating"
       response  = gets.chomp
 
       case response
@@ -35,6 +36,8 @@ class CommandLineInterface
         self.delete_location
       when "4"
         self.create_showtime
+      when "5"
+        self.update_movie_rating
       else
         self.greeting
       end
@@ -107,6 +110,16 @@ class CommandLineInterface
       puts "Movie "
     end
 
+    def update_movie_rating
+      puts "Please enter the movie title"
+      m_response = gets.chomp
+      m_find = Movie.find_by(title: m_response)
+      puts "Please enter the number you would like to give as rating for the movie"
+      r_response = gets.chomp
+      m_update = m_find.update(rating: r_response)
+      puts "You have given #{m_response} a rating of #{r_response}"
+    end
+
     def search_navigation
       puts "How would you like to search by?"
       puts "Type 1 for movie"
@@ -160,9 +173,14 @@ class CommandLineInterface
   end
 
   def find_by_showtime
-    puts "Please enter date and time in this format YYYYMMDDHHMMSS"
+    puts "Please enter time with the hour + AM/PM"
     time_response = gets.chomp
-    Showtime.find_by(time: time_response)
+    result = ShowTime.find_by(time: time_response)
+    movie = Movie.find_by(id: result.movie_id)
+    movie_title = movie.title
+    location = Location.find_by(id: result.location_id)
+    location_venue = location.theater_name
+    puts "#{movie_title} that are playing at #{location_venue} at #{time_response}"
   end
 
 end
