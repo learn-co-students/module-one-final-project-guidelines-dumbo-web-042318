@@ -41,7 +41,9 @@ class WeatherAPIGetter
   def weekly_arr # 5 instances of hrly temp at 12pm
     x = calculating_difference
     weekly_arr=[]
-    # weekly_arr << weather_hash["list"][0]
+    if x == "03:00:00" || x == "06:00:00" || x == "09:00:00" || x == "12:00:00"
+      weekly_arr << weather_hash["list"][0]
+    end
     weather_hash["list"].each do |hourly|
      if hourly["dt_txt"].include?(x)
         weekly_arr << hourly
