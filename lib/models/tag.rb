@@ -19,9 +19,13 @@ class Tag < ActiveRecord::Base
   end
 
 #tag
-  def self.list_question_tags(question)
+  def self.list_question_tags(the_question)
     puts "TAGS: "
-    question.answer.tags.each {|tag| print tag.t_content + ' | '}
+    TagAnswer.all.each do |tag_answer| 
+      if tag_answer.answer.question == the_question
+        print "#{tag_answer.tag.t_content} | "
+      end
+    end
     puts "\n\n"
   end
 

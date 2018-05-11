@@ -260,7 +260,7 @@ class TerminalUtilities
     gets
   end
 
-  def self.nicely_clear_terminal
+  def self.clear_screen
     puts "\n" * 200
     puts `clear`
   end
@@ -304,6 +304,10 @@ class MenuCommands
     loop do
       Menu.new_link_or_tag_y_n("tag")
       if self.yes_no_loop
+        TerminalUtilities.clear_screen
+        print "CURRENT "
+        Tag.list_question_tags(new_question)
+        puts "All Tag options"
         Tag.list_all_tags
         puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
         choice = gets.strip.downcase
@@ -316,7 +320,7 @@ class MenuCommands
   end
 
   def self.show_everything
-    TerminalUtilities.nicely_clear_terminal
+    TerminalUtilities.clear_screen
     Question.list_everything
     TerminalUtilities.pause_terminal_clear
   end
@@ -325,7 +329,7 @@ class MenuCommands
     Tag.list_all_tags
     puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
     choice = gets.strip
-    TerminalUtilities.nicely_clear_terminal
+    TerminalUtilities.clear_screen
     choice.to_i == 0 ? "" : Question.list_questions_by_tag(Tag.all[choice.to_i  - 1])
     TerminalUtilities.pause_terminal_clear
   end
@@ -348,13 +352,13 @@ class MenuCommands
       ""
     elsif choice.to_i != 0 && question
 
-      TerminalUtilities.nicely_clear_terminal
+      TerminalUtilities.clear_screen
       Menu.edit_question(question)
       if self.yes_no_loop
         Question.update_question(question)
       end 
 
-      TerminalUtilities.nicely_clear_terminal
+      TerminalUtilities.clear_screen
       Menu.edit_answer(question.answer)
       if self.yes_no_loop
         Answer.update_answer(question.answer)
@@ -380,6 +384,10 @@ class MenuCommands
        loop do
          Menu.new_link_or_tag_y_n("tag")
          if self.yes_no_loop
+           TerminalUtilities.clear_screen
+           print "CURRENT "
+           Tag.list_question_tags(question)
+           puts "All Tag options"
            Tag.list_all_tags
            puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
            choice = gets.strip.downcase
