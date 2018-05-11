@@ -2,6 +2,12 @@ class Question < ActiveRecord::Base
   has_one :answer
   # has_many :links, through: :answer
 
+  def self.set_question
+    puts "What's your question?"
+    input = gets.strip
+    Question.create(question: input)
+  end
+
   def self.destroy_all_tags_from_question(question)
     if question.answer
       tags = question.answer.tags

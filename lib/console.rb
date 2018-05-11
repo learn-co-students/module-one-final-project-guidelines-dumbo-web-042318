@@ -1,10 +1,10 @@
 class Interface
 #question
-  def self.set_question
-    puts "What's your question?"
-    input = gets.strip
-    Question.create(question: input)
-  end
+ #  def self.set_question
+ #    puts "What's your question?"
+ #    input = gets.strip
+ #    Question.create(question: input)
+ #  end
 #answer
   def self.set_answer(question)
     puts "What's the answer?"
@@ -270,7 +270,7 @@ class MenuCommands
   end
 
   def self.make_new_q_a_l_t
-    new_question = Interface.set_question
+    new_question = Question.set_question
     new_answer = Interface.set_answer(new_question)
     # make links
     loop do
