@@ -41,6 +41,7 @@ class WeatherAPIGetter
   def weekly_arr # returns 5 instances of hrly temp at 12pm
     x = calculating_difference
     weekly_arr=[]
+
     if x == "03:00:00" || x == "06:00:00" || x == "09:00:00" || x == "12:00:00"
       #if we are past noon prog was returning only 4 days(tmrw at noon onward)
       weekly_arr << weather_hash["list"][0]
