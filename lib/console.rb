@@ -204,12 +204,12 @@ class Interface
     end
   end
 #tag
-  def self.destroy_tag_from_all(tag)
-    if tag
-      TagAnswer.where("tag_id = ?", tag[:id]).destroy_all
-      tag.destroy
-    end
-  end
+  # def self.destroy_tag_from_all(tag)
+  #   if tag
+  #     TagAnswer.where("tag_id = ?", tag[:id]).destroy_all
+  #     tag.destroy
+  #   end
+  # end
 
 
 #   # not for user, eventually private
