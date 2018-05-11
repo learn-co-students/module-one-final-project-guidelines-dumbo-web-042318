@@ -83,12 +83,12 @@ class WeatherCLI
   def get_number_of_days #dummy proofs a number
     puts "How many days of weather? You can choose from 1 to 5 days."
     num = gets.chomp.to_i
-    if num ==42
+    if num == 42
       puts"insert cool easter egg here developers"
     elsif num <=0
       puts"MINIMUM OF ONE DAY!!!!!!!!!!!"
       num = 1
-    elsif num >5
+    elsif num > 5
       puts"ONLY 5 DAYS!!!!!!!!!!"
       num = 5
     else
