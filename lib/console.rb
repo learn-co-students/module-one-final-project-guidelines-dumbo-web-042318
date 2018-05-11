@@ -224,9 +224,9 @@ class Menu
     puts "1. Add question/answer/link/tags"
     puts "2. Show All questions/answers/links/tags"
     puts "3. Show all question by tag"
-    puts "4. Delete a question/answer/link/tag"
+    puts "4. Add new links and tags to question" 
     puts "5. Update question and answer"
-    puts "6. Add new links and tags to question"
+    puts "6. Delete a question/answer/link/tag"
     puts "Enter q to exit"
   end
 
@@ -327,7 +327,7 @@ class MenuCommands
 
   def self.pick_tag_questions_by_number
     Tag.list_all_tags
-    puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
+    puts "Enter the number of the tag to see the questions linked to them, enter any letter to go back"
     choice = gets.strip
     TerminalUtilities.clear_screen
     choice.to_i == 0 ? "" : Question.list_questions_by_tag(Tag.all[choice.to_i  - 1])
@@ -368,7 +368,7 @@ class MenuCommands
 
     def self.add_l_t
       Question.list_questions(Question.get_all_questions)
-      puts "Enter the number of the question you want to add a tag to."
+      puts "Enter the number of the question you want to add links and tags to."
       choice = gets.strip
       question = Question.question_object_from_menu(choice.to_i)
  
@@ -415,11 +415,11 @@ def run
       when "3"
         MenuCommands.pick_tag_questions_by_number
       when "4"
-        MenuCommands.delete_q_a_l_t
+         MenuCommands.add_l_t
       when "5"
         MenuCommands.update_q_a
-       when "6"
-         MenuCommands.add_l_t
+      when "6"
+        MenuCommands.delete_q_a_l_t
       when "q"
         puts "bye!"
         break
