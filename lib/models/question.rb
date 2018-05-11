@@ -36,6 +36,12 @@ class Question < ActiveRecord::Base
         puts "- #{question.answer.answer}"
         Tag.list_question_tags(question)
       end
+      if question.answer.tags.length == 0
+        puts "-" * 42 
+        puts " There are no questions with that tag. :(" 
+        puts "-" * 42 
+      end
+
     end
   end
 
