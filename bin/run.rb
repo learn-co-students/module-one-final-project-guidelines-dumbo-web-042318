@@ -1,10 +1,6 @@
 require_relative '../config/environment.rb'
 
-<<<<<<< HEAD
-WeatherCLI.new.welcome_run
-=======
-WeatherCLI.new.welcome
 
->>>>>>> new_branch
+WeatherCLI.new.welcome_run
 # binding.pry
 # true
