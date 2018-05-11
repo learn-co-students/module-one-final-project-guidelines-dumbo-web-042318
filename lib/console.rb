@@ -58,13 +58,10 @@ class MenuCommands
 
   def self.add_l_t
     Question.list_questions(Question.get_all_questions)
-    puts "Enter the number of the question you want to add links and tags to."
+    puts "Enter the number of the question you want to add links and tags to.\nEnter q to go back"
     choice = gets.strip
     question = Question.question_object_from_menu(choice.to_i)
-
-    if choice == "q" 
-      ""
-    elsif choice.to_i != 0 && question 
+    if choice.to_i != 0 && question 
       answer = question.answer
       CommandHelper.new_links_loop(answer)
       CommandHelper.new_tags_loop(answer)
