@@ -5,9 +5,12 @@ class WeatherCLI
     @instance_of_weatherapigetter = WeatherAPIGetter.new
   end
 
-  def run
-    welcome
+  def welcome
+    welcome_message
     @new_user = get_user_name
+  end
+
+  def run
     city_name = get_city_name
     country_code = get_country_code
     begin
@@ -27,11 +30,9 @@ class WeatherCLI
     display_result(@batch.forecasts)
 
     fun_info
-
-
   end
 
-  def welcome
+  def welcome_message
     puts "Hello! Welcome to WeatherCLI! Before we get to the weather:"
   end
 
@@ -99,12 +100,15 @@ class WeatherCLI
 
   def fun_info
     puts "Welcome to fun info!"
+    puts "Enter search to make a new search."
     puts "Enter history to see search history."
     puts "Enter high to see high of each day of your search."
     puts "Enter low to see low of each day of your search."
     puts "Enter x to exit program."
     input = gets.chomp.downcase
     case input
+    when "search"
+      run
     when "history"
       history
       fun_info
