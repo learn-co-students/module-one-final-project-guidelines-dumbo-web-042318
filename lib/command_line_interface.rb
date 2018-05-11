@@ -137,7 +137,6 @@ class WeatherCLI
   end
 
   def fun_info #misleading name. 0 fun info
-    puts "Welcome to fun info!"
     puts "Enter search to make a new search."
     puts "Enter history to see search history."
     puts "Enter high to see the hottest day of your search."
