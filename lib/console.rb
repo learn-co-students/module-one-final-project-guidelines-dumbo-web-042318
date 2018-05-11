@@ -337,7 +337,7 @@ class MenuCommands
     choice.to_i == 0 ? "" : Question.destroy_question_answer_links_tags(choice.to_i)
   end
 
-  def self.update_q_a_l_t
+  def self.update_q_a
     Question.list_questions(Question.get_all_questions)
     puts "Enter the number of the question you want to edit."
     puts "You will be able to edit the answer, links, or tags as well\nEnter q to go back."
@@ -377,7 +377,7 @@ def run
       when "4"
         MenuCommands.delete_q_a_l_t
       when "5"
-        MenuCommands.update_q_a_l_t
+        MenuCommands.update_q_a
       when "q"
         puts "bye!"
         break
