@@ -12,12 +12,12 @@ class Link < ActiveRecord::Base
     LinkAnswer.set_link_answer(link, answer)
   end
 
-# #link
-#   def self.list_all_links
-#     puts "Download iTerm2(TM) to visit links from command line by holding cmd when you click."
-#     links = Link.all
-#     links.length.times { |i| puts "#{i+1}. #{links[i].url}\n#{links[i].comment}" }
-#   end
+#link
+  def self.list_all_links
+    puts "Download iTerm2(TM) to visit links from command line by holding cmd when you click."
+    links = Link.all
+    links.length.times { |i| puts "#{i+1}. #{links[i].url}\n#{links[i].comment}" }
+  end
 
   # #link
   #   def self.print_links(answer)
