@@ -4,6 +4,8 @@ class CommandLineInterface
       puts "Hello admin!"
       puts "Type 1 for search" #Reading
       puts "Type 2 to work with database" #Create, Delete, Update
+      puts "Type 3 to view all movies"
+      puts "Type 4 to view all venues"
 
       response  = gets.chomp
 
@@ -12,6 +14,10 @@ class CommandLineInterface
         self.search_navigation
       when "2"
         self.working_with_database
+      when "3"
+        self.view_movies
+      when "4"
+        self.view_venues
       else
         self.greeting
       end
@@ -50,8 +56,11 @@ class CommandLineInterface
       genre_response = gets.chomp
       puts "Please enter a rating"
       rating_response = gets.chomp
-      puts result = Movie.create(title: title_response, genre:genre_response, rating:rating_response)
-      puts "Movie ID = #{result.id}"
+      result = Movie.create(title: title_response, genre:genre_response, rating:rating_response)
+      # puts "Movie ID = #{result.id}"
+      puts "#{result.title} has been added to your collection"
+      puts "-----------------------------------------------------"
+      tp Movie.all, "title", "genre", "rating"
     end
 
 
@@ -63,7 +72,10 @@ class CommandLineInterface
       puts "Please enter a neighborhood"
       n_response = gets.chomp
       result = Location.create(theater_name: t_response, address: a_response, neighborhood: n_response)
-      puts "Location ID = #{result.id}"
+      # puts "Location ID = #{result.id}"
+      puts "#{result.theater_name} is now in service and playing movies near you!"
+      puts "-----------------------------------------------------"
+      tp Location.all, "theater_name", "address", "neighborhood"
     end
 
     def delete_location
@@ -79,13 +91,13 @@ class CommandLineInterface
         t_response = gets.chomp
         theater = Location.find_by(theater_name: t_response)
         theater.destroy
-        puts "This theater is no longer in service"
+        puts "#{theater.theater_name} is no longer in service"
       when "2"
         puts "Please enter the address of the theater you would like to delete"
         a_response = gets.chomp
         address = Location.find_by(address: a_response)
         address.destroy
-        puts "This theater is no longer in service"
+        puts "#{theater.theater_name} is no longer in service"
       else
         self.greeting
       end
@@ -107,17 +119,25 @@ class CommandLineInterface
       v_find = Location.find_by(theater_name: v_response)
       v_id = v_find.id
       result = ShowTime.new(time: t_response, price: p_response, three_d: three_d_response, location_id: v_id, movie_id: m_id)
-      puts "Movie "
+      puts "#{m_find.title} is now playing at #{v_find.theater_name} at #{result.time}"
+    end
+
+    def method_name
+
     end
 
     def update_movie_rating
       puts "Please enter the movie title"
       m_response = gets.chomp
       m_find = Movie.find_by(title: m_response)
+      old_r = m_find.rating
       puts "Please enter the number you would like to give as rating for the movie"
       r_response = gets.chomp
       m_update = m_find.update(rating: r_response)
-      puts "You have given #{m_response} a rating of #{r_response}"
+      # puts "You have given #{m_response} a rating of #{r_response}"
+      puts "#{m_find.title}'s rating has been updated from #{old_r} to #{r_response}"
+      puts "-----------------------------------------------------"
+      tp Movie.all, "title", "rating"
     end
 
     def search_navigation
@@ -145,10 +165,19 @@ class CommandLineInterface
     puts "Please enter movie title"
     movie_response = gets.chomp
     result = Movie.find_by(title: movie_response)
-    puts "Title: #{result.title}"
-    puts "Genre : #{result.genre} "
-    puts "Rating: #{result.rating}"
+    # puts "Title: #{result.title}"
+    # puts "Genre : #{result.genre} "
+    # puts "Rating: #{result.rating}"
+    #tp result.title
     # if there is no movie, do no movie found
+  end
+
+  def view_movies
+    tp Movie.all
+  end
+
+  def view_venues
+    tp Location.all
   end
 
   def find_by_location
@@ -180,7 +209,8 @@ class CommandLineInterface
     movie_title = movie.title
     location = Location.find_by(id: result.location_id)
     location_venue = location.theater_name
-    puts "#{movie_title} that are playing at #{location_venue} at #{time_response}"
+    # puts "#{movie_title} that are playing at #{location_venue} at #{time_response}"
+    tp ShowTime.all, "movie.title", "time", "location.theater_name"
   end
 
 end
