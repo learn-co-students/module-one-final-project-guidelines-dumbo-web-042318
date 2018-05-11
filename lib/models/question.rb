@@ -8,6 +8,30 @@ class Question < ActiveRecord::Base
     Question.create(question: input)
   end
 
+  # get arrays of questions 
+  def self.get_all_questions
+    return Question.all.map { |q| q }
+  end
+
+  def self.get_all_answered_questions
+    return Question.all.select { |q| q.answer != nil }
+  end
+
+  def self.get_all_unanswered_questions
+    return Question.all.select { |q| q.answer.nil? }
+  end
+
+  def self.list_questions(arr)
+    arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
+  end
+
+  def self.question_object_from_menu(index_from_menu)
+    # BE SURE TO SHOW USER THE GET_ALL_QUESTIONS ARRAY FOR THE DELETE MENU
+    arr = self.get_all_questions
+    return arr[index_from_menu - 1]
+  end
+
+  # destroy methods 
   def self.destroy_all_tags_from_question(question)
     if question.answer
       tags = question.answer.tags
@@ -28,7 +52,7 @@ class Question < ActiveRecord::Base
   end
 
   def self.destroy_question_answer_links_tags(index_from_menu)
-    question = Interface.question_object_from_menu(index_from_menu)
+    question = self.question_object_from_menu(index_from_menu)
     if question
       self.destroy_all_tags_from_question(question)
       self.destroy_links(question)

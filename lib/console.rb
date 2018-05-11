@@ -39,22 +39,22 @@ class Interface
 
   # get arrays of question and answer combos
 #question
-  def self.get_all_questions
-    return Question.all.map { |q| q }
-  end
-
-#question
-  def self.get_all_answered_questions
-    return Question.all.select { |q| q.answer != nil }
-  end
-#question
-  def self.get_all_unanswered_questions
-    return Question.all.select { |q| q.answer.nil? }
-  end
-#question
-  def self.list_questions(arr)
-    arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
-  end
+#   def self.get_all_questions
+#     return Question.all.map { |q| q }
+#   end
+# 
+# #question
+#   def self.get_all_answered_questions
+#     return Question.all.select { |q| q.answer != nil }
+#   end
+# #question
+#   def self.get_all_unanswered_questions
+#     return Question.all.select { |q| q.answer.nil? }
+#   end
+# #question
+#   def self.list_questions(arr)
+#     arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
+#   end
 
 
   # gets and prints out various combos of q's, a's, and links
@@ -69,7 +69,7 @@ class Interface
   # end
 #question
   def self.list_questions_by_tag(tag)
-    arr = self.get_all_answered_questions
+    arr = Question.get_all_answered_questions
     arr.each_with_index do |question, i|
       if question.answer.tags.include?(tag)
         puts "#{i+1} #{question.question}"
@@ -88,7 +88,7 @@ class Interface
   # THIS ONE
 #question
   def self.all_questions_with_answers
-    arr = self.get_all_answered_questions
+    arr = Question.get_all_answered_questions
     arr.each_with_index do |question, i|
       puts "#{i+1}. #{question.question}"
       puts  "-" * 20
@@ -113,7 +113,7 @@ class Interface
   # THIS ONE
 #question
   def self.list_everything
-    self.get_all_answered_questions.each_with_index do |q, i|
+    Question.get_all_answered_questions.each_with_index do |q, i|
       puts  "-" * 20
       puts "#{i+1}. #{q.question}"
       puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
@@ -148,17 +148,17 @@ class Interface
 
   # selector methods
 #question
-  def self.question_object_from_menu(index_from_menu)
-    # BE SURE TO SHOW USER THE GET_ALL_QUESTIONS ARRAY FOR THE DELETE MENU
-    arr = self.get_all_questions
-    return arr[index_from_menu - 1]
-  end
+#   def self.question_object_from_menu(index_from_menu)
+#     # BE SURE TO SHOW USER THE GET_ALL_QUESTIONS ARRAY FOR THE DELETE MENU
+#     arr = self.get_all_questions
+#     return arr[index_from_menu - 1]
+#   end
 
     # delete methods
 
 #question??????
   def self.destroy_answer_links(index_from_menu)
-    question = self.question_object_from_menu(index_from_menu)
+    question = Question.question_object_from_menu(index_from_menu)
     if question
       Question.destroy_links(question)
       self.destroy_answer(question)
@@ -309,7 +309,7 @@ class MenuCommands
   end
 
   def self.delete_q_a_l_t
-    Interface.list_questions(Interface.get_all_questions)
+    Question.list_questions(Question.get_all_questions)
     puts "enter the number of the question you want to delete."
     puts "You will also delete the accompanying answer, links, and tags.\nEnter any letter to go back"
     choice = gets.strip
