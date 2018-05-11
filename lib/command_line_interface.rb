@@ -5,12 +5,12 @@ class WeatherCLI
     @instance_of_weatherapigetter = WeatherAPIGetter.new
   end
 
-  def welcome
+  def welcome#says hello and grabs your name!
     welcome_message
     @new_user = get_user_name
   end
 
-  def run
+  def run #the good stuff
     safely_run
     @batch = Batch.new
     @num = get_number_of_days
@@ -19,8 +19,8 @@ class WeatherCLI
     display_result(@batch.forecasts)
     fun_info
   end
-  
-  def safely_run
+
+  def safely_run #the good stuff but this time handling for errors
     city_name = get_city_name
     country_code = get_country_code
     begin
@@ -31,7 +31,7 @@ class WeatherCLI
     end
   end
 
-  def welcome_message
+  def welcome_message #not a welcome massage. slightly upsetting
     puts "Hello! Welcome to WeatherCLI! Before we get to the weather:"
   end
 
@@ -39,17 +39,25 @@ class WeatherCLI
     puts "What is your name?"
     @username = gets.chomp
     new_user = User.find_or_create_by(name: @username)
-    new_user
   end
 
-  def get_city_name
+  def get_city_name #asks you for a city name
     puts "Which city would you like to view weather for? Please enter city."
     @city_name = gets.chomp
+    if @city_name == ""
+      @city_name = "moron"
+    end
+      @city_name
   end
 
   def get_country_code
+
     puts "Country code? Please enter country code as 2 characters **Use us for United States**"
     @country_code = gets.chomp
+    if @country_code == ""
+      @country_code = "ar"
+    end
+    @country_code
   end
 
   def get_forecast_from_api(city_name, country_code)
@@ -95,7 +103,7 @@ class WeatherCLI
   end
 
   def display_result(arr_forecasts_obj)
-    puts "Hi, #{@username}! Here’s the #{@num}-day forecast:"
+    puts "Hi, #{User.last.name}! Here’s the #{@num}-day forecast for #{@city_name}:"
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     arr_forecasts_obj.each do |forecast|
       a = forecast.date_text

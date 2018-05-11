@@ -1,7 +1,7 @@
 
 class WeatherAPIGetter
 
-  def get_weather_forecast(city_name, country_code)
+  def get_weather_forecast(city_name, country_code)#grabs info from our api for our location and country
     @weather_hash = get_all_weather_data(city_name, country_code)
     weekly_arr
   end
@@ -10,7 +10,7 @@ class WeatherAPIGetter
     @weather_hash
   end
 
-  def calculating_difference
+  def calculating_difference #gives approx difference from UTC time and adjusts our locations time
     lon = (weather_hash["city"]["coord"]["lon"]).abs
     x = ((lon / 15) + 12).to_i
     if x > 24
@@ -38,13 +38,15 @@ class WeatherAPIGetter
 
   end
 
-  def weekly_arr # 5 instances of hrly temp at 12pm
+  def weekly_arr # returns 5 instances of hrly temp at 12pm
     x = calculating_difference
     weekly_arr=[]
     if x == "03:00:00" || x == "06:00:00" || x == "09:00:00" || x == "12:00:00"
+      #if we are past noon prog was returning only 4 days(tmrw at noon onward)
       weekly_arr << weather_hash["list"][0]
     end
     weather_hash["list"].each do |hourly|
+      #grabs our hourly datetime and compares to see if it is noon. adds noon to our array
      if hourly["dt_txt"].include?(x)
         weekly_arr << hourly
      end
