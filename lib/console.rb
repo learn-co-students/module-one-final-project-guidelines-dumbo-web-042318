@@ -342,10 +342,10 @@ class MenuCommands
     puts "Enter the number of the question you want to edit."
     puts "You will be able to edit the answer, links, or tags as well\nEnter q to go back."
     choice = gets.strip
+      question = Question.question_object_from_menu(choice.to_i)
     if choice == "q" 
       ""
-    elsif choice.to_i != 0
-      question = Question.question_object_from_menu(choice.to_i)
+    elsif choice.to_i != 0 && question
 
       TerminalUtilities.nicely_clear_terminal
       Menu.edit_question(question)
@@ -360,6 +360,37 @@ class MenuCommands
       end 
     end
   end
+
+#    def self.add_l_t
+#      Question.list_questions(Question.get_all_questions)
+#      puts "Enter the number of the question you want to add a tag to."
+#      choice = gets.strip
+#      question = Question.question_object_from_menu(choice.to_i)
+# 
+#      if choice == "q" 
+#        ""
+#      elsif choice.to_i != 0 && question 
+#        answer = question.answer
+#        loop do
+#         Menu.new_link_or_tag_y_n("link")
+#         self.yes_no_loop ? Link.set_link(answer) : break
+#       end
+#       # make tags
+#       loop do
+#         Menu.new_link_or_tag_y_n("tag")
+#         if self.yes_no_loop
+#           Tag.list_all_tags
+#           puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
+#           choice = gets.strip.downcase
+#           tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
+#           TagAnswer.create_tag_answer(tag, answer)
+#         else # choice = false
+#           break
+#         end
+#       end
+#      end
+#    end
+
 end
 
 
@@ -378,6 +409,8 @@ def run
         MenuCommands.delete_q_a_l_t
       when "5"
         MenuCommands.update_q_a
+      # when "6"
+        # MenuCommands.add_l_t
       when "q"
         puts "bye!"
         break
