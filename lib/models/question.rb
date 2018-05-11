@@ -49,7 +49,7 @@ class Question < ActiveRecord::Base
 
   def self.list_everything
     Question.get_all_answered_questions.each_with_index do |q, i|
-      puts  "-" * 20
+      puts  "-" * 40
       puts "#{i+1}. #{q.question}"
       puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
       puts "Links:"
