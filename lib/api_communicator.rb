@@ -53,7 +53,7 @@ class WeatherAPIGetter
         weekly_arr << hourly
      end
     end
-    weekly_arr
+    weekly_arr.uniq
   end
 
 

@@ -6,6 +6,7 @@ class WeatherCLI
   end
 
   def welcome_run#says hello and grabs your name!
+    cls
     welcome_message
     @new_user = get_user_name
     run
@@ -17,6 +18,7 @@ class WeatherCLI
     @num = get_number_of_days
     create_and_save_forecast(@num)
     Query.create(city: @city_name, country_code: @country_code, user: @new_user, batch: @batch)
+    cls
     display_result(@batch.forecasts)
     fun_info
   end
@@ -36,18 +38,18 @@ class WeatherCLI
     puts "Hello! Welcome to WeatherCLI! Before we get to the weather:"
   end
 
-  def get_num_days
-    puts "how many days do you want?"
-
-    num = gets.chomp.to_i
-    if num>5
-       num=5
-     elsif num<0
-       num=1
-     else
-       num
-     end
-  end
+  # def get_num_days
+  #   puts "how many days do you want?"
+  #
+  #   num = gets.chomp.to_i
+  #   if num>5
+  #      num=5
+  #    elsif num<0
+  #      num=1
+  #    else
+  #      num
+  #    end
+  # end
 
   def get_user_name # gets user name
     puts "What is your name?"
@@ -146,23 +148,30 @@ class WeatherCLI
     puts "Enter high to see the hottest day of your search."
     puts "Enter low to see the coldest day of your search."
     puts "Enter x to exit program.\n"
+    puts "\n"
     input = gets.chomp.downcase
     #case boi to see what lame method your dumb face wants to see
     case input
     when "search"
+      cls
       run
     when "history"
+      cls
       history
       fun_info
     when "low"
+      cls
       min_temp
       fun_info
     when "high"
+      cls
       high_temp
       fun_info
     when 'x'
+      puts "\n"
       exit_message
     else
+      cls
       fun_info
     end
   end
@@ -204,6 +213,10 @@ class WeatherCLI
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
   end
 
+  def cls
+   clear_code = %x{clear}
+   print clear_code
+  end
 
 end
 #nothing to see here
