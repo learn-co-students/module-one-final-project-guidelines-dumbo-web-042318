@@ -1,8 +1,5 @@
 
 class WeatherCLI
-  # def gimme_city # gets city from User
-  #   puts "Which city would you like to view weather for? Please enter city."
-  # en
 
   def initialize
     @instance_of_weatherapigetter = WeatherAPIGetter.new
@@ -13,7 +10,14 @@ class WeatherCLI
     new_user = get_user_name
     city_name = get_city_name
     country_code = get_country_code
+    begin
     @weekly_arr = get_forecast_from_api(city_name, country_code)
+    rescue
+      puts "Oops. Try again."
+      city_name = get_city_name
+      country_code = get_country_code
+      @weekly_arr = get_forecast_from_api(city_name, country_code)
+    end
     @batch = Batch.new
     @num = get_number_of_days
     create_and_save_forecast(@num)
@@ -74,7 +78,7 @@ class WeatherCLI
   def create_and_save_forecast(num)
     i = 0
      while i < num
-      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date: date_key_hash(i)["date"], batch: @batch)
+      Forecast.create(temp: date_key_hash(i)["temp"], humidity: date_key_hash(i)["humidity"], date_text: date_key_hash(i)["date"], batch: @batch)
        i += 1
      end
   end
@@ -87,19 +91,14 @@ class WeatherCLI
   end
 
   def display_result(arr_forecasts_obj)
-    # puts "Hi #{@username}, the temperature in #{Query.last.city}, #{Query.last.country_code} is #{Forecast.last.temp} F and the humidity level is #{Forecast.last.humidity}."
-    puts "Hi, #{@username}! Here’s the #{@num} day forecast:"
+    puts "Hi, #{@username}! Here’s the #{@num}-day forecast:"
     arr_forecasts_obj.each do |forecast|
-      puts "Date: #{forecast.date} \n Temperature: #{forecast.temp} F \n Humidity: #{forecast.humidity}%"
+      a = forecast.date_text
+      print " Date: "
+      p a
+      puts " Temperature: #{forecast.temp} F \n Humidity: #{forecast.humidity}%"
       puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-      end
     end
-
-    # def date_sanitize(date_time)
-    #   new_date = date_time.localtime
-    #   # date_no_time = date_time.split(" ")[0]
-    #   # split_date = date_no_time.split("-")
-    #   # new_string = split_date[1] + "/" + split_date[2] + "/" + split_date[0]
-    # end
+  end
 
 end
