@@ -9,5 +9,9 @@ class User < ActiveRecord::Base
     end
     my_forecasts
   end
+  # 
+  # def order_batch
+  #   self.forecasts.last.sort_by{|forecast| forecast.temp}
+  # end
 
 end
