@@ -25,6 +25,52 @@ class Question < ActiveRecord::Base
     arr.length.times { |i| puts "#{i+1}. #{arr[i].question}" }
   end
 
+
+
+
+  def self.list_questions_by_tag(tag)
+    arr = Question.get_all_answered_questions
+    arr.each_with_index do |question, i|
+      if question.answer.tags.include?(tag)
+        puts "#{i+1} #{question.question}"
+        puts "- #{question.answer.answer}"
+        Tag.list_question_tags(question)
+      end
+    end
+  end
+
+
+
+  def self.list_everything
+    Question.get_all_answered_questions.each_with_index do |q, i|
+      puts  "-" * 20
+      puts "#{i+1}. #{q.question}"
+      puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
+      puts "Links:"
+      Link.print_links(q.answer)
+      Tag.list_question_tags(q)
+    end
+  end
+
+  # update methods
+#question
+  def self.update_question(question)
+    puts "What's your edited question?"
+    input = gets.strip
+    question.update(question: input)
+  end
+
+#   def self.all_questions_with_answers
+#     arr = Question.get_all_answered_questions
+#     arr.each_with_index do |question, i|
+#       puts "#{i+1}. #{question.question}"
+#       puts  "-" * 20
+#       puts "#{question.answer.answer}"
+#       puts  "-" * 20
+#       # self.list_question_tags(question)
+#     end
+#   end
+
   def self.question_object_from_menu(index_from_menu)
     # BE SURE TO SHOW USER THE GET_ALL_QUESTIONS ARRAY FOR THE DELETE MENU
     arr = self.get_all_questions

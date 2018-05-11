@@ -68,16 +68,16 @@ class Interface
   #   puts ""
   # end
 #question
-  def self.list_questions_by_tag(tag)
-    arr = Question.get_all_answered_questions
-    arr.each_with_index do |question, i|
-      if question.answer.tags.include?(tag)
-        puts "#{i+1} #{question.question}"
-        puts "- #{question.answer.answer}"
-        Tag.list_question_tags(question)
-      end
-    end
-  end
+#   def self.list_questions_by_tag(tag)
+#     arr = Question.get_all_answered_questions
+#     arr.each_with_index do |question, i|
+#       if question.answer.tags.include?(tag)
+#         puts "#{i+1} #{question.question}"
+#         puts "- #{question.answer.answer}"
+#         Tag.list_question_tags(question)
+#       end
+#     end
+#   end
 #tag
   # def self.list_question_tags(question)
   #   puts "TAGS: "
@@ -87,16 +87,16 @@ class Interface
 
   # THIS ONE
 #question
-  def self.all_questions_with_answers
-    arr = Question.get_all_answered_questions
-    arr.each_with_index do |question, i|
-      puts "#{i+1}. #{question.question}"
-      puts  "-" * 20
-      puts "#{question.answer.answer}"
-      puts  "-" * 20
-      # self.list_question_tags(question)
-    end
-  end
+#   def self.all_questions_with_answers
+#     arr = Question.get_all_answered_questions
+#     arr.each_with_index do |question, i|
+#       puts "#{i+1}. #{question.question}"
+#       puts  "-" * 20
+#       puts "#{question.answer.answer}"
+#       puts  "-" * 20
+#       # self.list_question_tags(question)
+#     end
+#   end
 #link
   # def self.list_all_links
   #   puts "Download iTerm2(TM) to visit links from command line by holding cmd when you click."
@@ -112,30 +112,30 @@ class Interface
 
   # THIS ONE
 #question
-  def self.list_everything
-    Question.get_all_answered_questions.each_with_index do |q, i|
-      puts  "-" * 20
-      puts "#{i+1}. #{q.question}"
-      puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
-      puts "Links:"
-      Link.print_links(q.answer)
-      Tag.list_question_tags(q)
-    end
-  end
+#  def self.list_everything
+#    Question.get_all_answered_questions.each_with_index do |q, i|
+#      puts  "-" * 20
+#      puts "#{i+1}. #{q.question}"
+#      puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
+#      puts "Links:"
+#      Link.print_links(q.answer)
+#      Tag.list_question_tags(q)
+#    end
+#  end
 
   # update methods
 #question
-  def self.update_question(question)
-    puts "What's your edited question?"
-    input = gets.strip
-    question.update(question: input)
-  end
+#   def self.update_question(question)
+#     puts "What's your edited question?"
+#     input = gets.strip
+#     question.update(question: input)
+#   end
 #answer
-  def self.update_answer(answer)
-    puts "What's your edited answer?"
-    input = gets.strip
-    answer.update(answer: input)
-  end
+#   def self.update_answer(answer)
+#     puts "What's your edited answer?"
+#     input = gets.strip
+#     answer.update(answer: input)
+#   end
 #link
   # def self.update_link(link)
   #   puts "What's your edited link url?"
@@ -157,13 +157,13 @@ class Interface
     # delete methods
 
 #question??????
-  def self.destroy_answer_links(index_from_menu)
-    question = Question.question_object_from_menu(index_from_menu)
-    if question
-      Question.destroy_links(question)
-      self.destroy_answer(question)
-    end
-  end
+#   def self.destroy_answer_links(index_from_menu)
+#     question = Question.question_object_from_menu(index_from_menu)
+#     if question
+#       Question.destroy_links(question)
+#       self.destroy_answer(question)
+#     end
+#   end
 #question
   # def self.destroy_question_answer_links_tags(index_from_menu)
   #   question = self.question_object_from_menu(index_from_menu)
@@ -295,7 +295,7 @@ class MenuCommands
 
   def self.show_everything
     TerminalUtilities.nicely_clear_terminal
-    Interface.list_everything
+    Question.list_everything
     TerminalUtilities.pause_terminal_clear
   end
 
@@ -304,7 +304,7 @@ class MenuCommands
     puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
     choice = gets.strip
     TerminalUtilities.nicely_clear_terminal
-    choice.to_i == 0 ? "" : Interface.list_questions_by_tag(Tag.all[choice.to_i  - 1])
+    choice.to_i == 0 ? "" : Question.list_questions_by_tag(Tag.all[choice.to_i  - 1])
     TerminalUtilities.pause_terminal_clear
   end
 
