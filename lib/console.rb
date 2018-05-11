@@ -6,11 +6,11 @@ class Interface
  #    Question.create(question: input)
  #  end
 #answer
-  def self.set_answer(question)
-    puts "What's the answer?"
-    input = gets.strip
-    Answer.create(answer: input, question_id: question.id)
-  end
+ #  def self.set_answer(question)
+ #    puts "What's the answer?"
+ #    input = gets.strip
+ #    Answer.create(answer: input, question_id: question.id)
+ #  end
 # #link
 #   def self.set_link(answer)
 #     puts "What's the url?"
@@ -32,9 +32,10 @@ class Interface
 
   # builder
 #answer
-  # def self.set_question_answer
-  #   set_answer(set_question)
-  # end
+  # NEVER ACTUALLY USED 
+  #### def self.set_question_answer
+  ####   set_answer(set_question)
+  #### end
 
   # get arrays of question and answer combos
 #question
@@ -271,7 +272,7 @@ class MenuCommands
 
   def self.make_new_q_a_l_t
     new_question = Question.set_question
-    new_answer = Interface.set_answer(new_question)
+    new_answer = Answer.set_answer(new_question)
     # make links
     loop do
       Menu.new_link_or_tag_y_n("link")
