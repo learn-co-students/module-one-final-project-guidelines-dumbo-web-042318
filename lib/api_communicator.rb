@@ -13,6 +13,7 @@ class WeatherAPIGetter
   def calculating_difference
     lon = (weather_hash["city"]["coord"]["lon"]).abs
     x = ((lon / 15) + 12).to_i
+
     if x > 24
       x = x - 24
     end
@@ -43,7 +44,7 @@ class WeatherAPIGetter
     weekly_arr=[]
     # weekly_arr << weather_hash["list"][0]
     weather_hash["list"].each do |hourly|
-     if hourly["dt_txt"].include?(x)
+     if hourly["dt_txt"].include?(x) || hourly["dt_txt"].include?("00:00:00")
         weekly_arr << hourly
      end
     end
