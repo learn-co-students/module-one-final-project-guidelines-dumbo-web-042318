@@ -23,7 +23,7 @@ class MenuCommand
 
   def self.pick_tag_questions_by_number
     Tag.list_all_tags
-    puts "Enter the number of the tag to see the questions linked to them, enter any letter to go back"
+    puts "\nEnter the number of the tag to see the questions linked to them, enter q to go back"
     choice = gets.strip
     TerminalUtilities.clear_screen
     if choice.to_i != 0 && choice.to_i <= Tag.all.length
@@ -34,7 +34,7 @@ class MenuCommand
 
   def self.delete_q_a_l_t
     Question.list_questions(Question.get_all_questions)
-    puts "enter the number of the question you want to delete."
+    puts "\nEnter the number of the question you want to delete."
     puts "You will also delete the accompanying answer, links, and tags.\nEnter q to go back."
     choice = gets.strip
     choice.to_i == 0 ? "" : Question.destroy_question_answer_links_tags(choice.to_i)
@@ -42,7 +42,7 @@ class MenuCommand
 
   def self.update_q_a
     Question.list_questions(Question.get_all_questions)
-    puts "Enter the number of the question you want to edit.\nYou will be able to edit the answer, links, or tags as well\nEnter q to go back."
+    puts "\nEnter the number of the question you want to edit.\nYou will be able to edit the answer, links, or tags as well\nEnter q to go back."
     choice = gets.strip.to_i
     question = Question.question_object_from_menu(choice)
     if choice != 0 && question
@@ -58,7 +58,7 @@ class MenuCommand
 
   def self.add_l_t
     Question.list_questions(Question.get_all_questions)
-    puts "Enter the number of the question you want to add links and tags to.\nEnter q to go back"
+    puts "\nEnter the number of the question you want to add links and tags to.\nEnter q to go back"
     choice = gets.strip
     question = Question.question_object_from_menu(choice.to_i)
     if choice.to_i != 0 && question 
@@ -69,7 +69,6 @@ class MenuCommand
   end
 
 end
-
 
 
 def run
@@ -89,7 +88,7 @@ def run
       when "6"
         MenuCommand.delete_q_a_l_t
       when "q"
-        puts "bye!"
+        puts "Bye!"
         break
       else
         puts "Hmmm, didn't get that try again."
