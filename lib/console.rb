@@ -62,6 +62,33 @@ class MenuCommands
     end
   end
 
+  def self.new_links_loop(answer)
+    loop do
+      Menu.new_link_or_tag_y_n("link")
+      self.yes_no_loop ? Link.set_link(answer) : break
+    end
+  end
+
+  def self.new_tags_loop(answer)
+     loop do
+       Menu.new_link_or_tag_y_n("tag")
+       if self.yes_no_loop
+         TerminalUtilities.clear_screen
+         print "CURRENT "
+         Tag.list_question_tags(answer.question)
+         puts "All Tag options"
+         Tag.list_all_tags
+         puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
+         choice = gets.strip.downcase
+         tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
+         TagAnswer.create_tag_answer(tag, answer)
+       else # choice = false
+         break
+       end
+     end
+
+  end
+
   # main run methods
   def self.start
     puts `clear`
@@ -76,27 +103,9 @@ class MenuCommands
     new_question = Question.set_question
     new_answer = Answer.set_answer(new_question)
     # make links
-    loop do
-      Menu.new_link_or_tag_y_n("link")
-      self.yes_no_loop ? Link.set_link(new_answer) : break
-    end
+    self.new_links_loop(new_answer)
     # make tags
-    loop do
-      Menu.new_link_or_tag_y_n("tag")
-      if self.yes_no_loop
-        TerminalUtilities.clear_screen
-        print "CURRENT "
-        Tag.list_question_tags(new_question)
-        puts "All Tag options"
-        Tag.list_all_tags
-        puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
-        choice = gets.strip.downcase
-        tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
-        TagAnswer.create_tag_answer(tag, new_answer)
-      else # choice = false
-        break
-      end
-    end
+    self.new_tags_loop(new_answer)  
   end
 
   def self.show_everything
@@ -148,39 +157,20 @@ class MenuCommands
     end
   end
 
-    def self.add_l_t
-      Question.list_questions(Question.get_all_questions)
-      puts "Enter the number of the question you want to add links and tags to."
-      choice = gets.strip
-      question = Question.question_object_from_menu(choice.to_i)
- 
-      if choice == "q" 
-        ""
-      elsif choice.to_i != 0 && question 
-        answer = question.answer
-        loop do
-         Menu.new_link_or_tag_y_n("link")
-         self.yes_no_loop ? Link.set_link(answer) : break
-       end
-       # make tags
-       loop do
-         Menu.new_link_or_tag_y_n("tag")
-         if self.yes_no_loop
-           TerminalUtilities.clear_screen
-           print "CURRENT "
-           Tag.list_question_tags(question)
-           puts "All Tag options"
-           Tag.list_all_tags
-           puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
-           choice = gets.strip.downcase
-           tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
-           TagAnswer.create_tag_answer(tag, answer)
-         else # choice = false
-           break
-         end
-       end
-      end
+  def self.add_l_t
+    Question.list_questions(Question.get_all_questions)
+    puts "Enter the number of the question you want to add links and tags to."
+    choice = gets.strip
+    question = Question.question_object_from_menu(choice.to_i)
+
+    if choice == "q" 
+      ""
+    elsif choice.to_i != 0 && question 
+      answer = question.answer
+      self.new_links_loop(answer)
+      self.new_tags_loop(answer)
     end
+  end
 
 end
 
