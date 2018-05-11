@@ -32,8 +32,10 @@ class Question < ActiveRecord::Base
     arr = Question.get_all_answered_questions
     arr.each_with_index do |question, i|
       if question.answer.tags.include?(tag)
-        puts "#{i+1} #{question.question}"
-        puts "- #{question.answer.answer}"
+        puts "-" * 42
+        puts "#{i+1}. #{question.question}"
+        puts "-- #{question.answer.answer}"
+        Link.print_links(question.answer)
         Tag.list_question_tags(question)
       end
       if question.answer.tags.length == 0
@@ -52,7 +54,6 @@ class Question < ActiveRecord::Base
       puts  "-" * 40
       puts "#{i+1}. #{q.question}"
       puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
-      puts "Links:"
       Link.print_links(q.answer)
       Tag.list_question_tags(q)
     end
