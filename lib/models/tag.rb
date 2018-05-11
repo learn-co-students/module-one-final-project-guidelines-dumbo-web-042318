@@ -17,12 +17,12 @@ class Tag < ActiveRecord::Base
     puts ""
   end
 
-# #tag
-#   def self.list_question_tags(question)
-#     puts "TAGS: "
-#     question.answer.tags.each {|tag| print tag.t_content + ' | '}
-#     puts "\n\n"
-#   end
+#tag
+  def self.list_question_tags(question)
+    puts "TAGS: "
+    question.answer.tags.each {|tag| print tag.t_content + ' | '}
+    puts "\n\n"
+  end
 
 # #tag
 #   def self.destroy_tag_from_all(tag)

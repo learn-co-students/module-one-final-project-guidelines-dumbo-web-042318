@@ -73,16 +73,16 @@ class Interface
       if question.answer.tags.include?(tag)
         puts "#{i+1} #{question.question}"
         puts "- #{question.answer.answer}"
-        self.list_question_tags(question)
+        Tag.list_question_tags(question)
       end
     end
   end
 #tag
-  def self.list_question_tags(question)
-    puts "TAGS: "
-    question.answer.tags.each {|tag| print tag.t_content + ' | '}
-    puts "\n\n"
-  end
+  # def self.list_question_tags(question)
+  #   puts "TAGS: "
+  #   question.answer.tags.each {|tag| print tag.t_content + ' | '}
+  #   puts "\n\n"
+  # end
 
   # THIS ONE
 #question
@@ -118,7 +118,7 @@ class Interface
       puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
       puts "Links:"
       self.print_links(q.answer)
-      self.list_question_tags(q)
+      Tag.list_question_tags(q)
     end
   end
 
