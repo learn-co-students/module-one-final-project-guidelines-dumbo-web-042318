@@ -6,7 +6,7 @@ class Link < ActiveRecord::Base
   def self.set_link(answer)
     puts "What's the url?"
     input_url = gets.strip
-    puts "And do you have a comment?"
+    puts "Enter a short description for this site"
     input_comment = gets.strip
     link = Link.create(url: input_url, comment: input_comment)
     LinkAnswer.set_link_answer(link, answer)

@@ -1,4 +1,4 @@
-class Interface
+# class Interface
 #question
  #  def self.set_question
  #    puts "What's your question?"
@@ -215,7 +215,7 @@ class Interface
 #     LinkAnswer.create(link_id: link.id, answer_id: answer.id)
 #   end
 
-end
+# end
 
 
 class Menu
@@ -228,15 +228,15 @@ class Menu
   end
 
   def self.new_link_or_tag_y_n(option)
-    puts "would you like to add a #{option}?"
+    puts "Would you like to add a #{option}?"
     puts "y/n (lowercase, just the letter)"
   end
 end
 
 class TerminalUtilities
   def self.pause_terminal_clear
-    puts "scroll up to see all entries, enter any key to go back"
-    choice = gets
+    puts "Scroll up to see all entries, press enter to go back"
+    gets
   end
 
   def self.nicely_clear_terminal
@@ -255,7 +255,7 @@ class MenuCommands
       elsif choice == "n"
         return false
       else
-        puts "sorry, didn't get that, try again. y or n"
+        puts "Sorry, didn't get that, try again. y or n"
       end
     end
   end
@@ -264,7 +264,7 @@ class MenuCommands
   def self.start
     puts `clear`
     Menu.main_menu_options
-    puts "what would you like to do?"
+    puts "What would you like to do?"
     choice = gets.strip
     puts `clear`
     return choice
@@ -283,7 +283,7 @@ class MenuCommands
       Menu.new_link_or_tag_y_n("tag")
       if self.yes_no_loop
         Tag.list_all_tags
-        puts "enter the number of the tag to add it\nor type in a new tag and press enter"
+        puts "Enter the number of the tag to add it\nor type in a new tag and press enter"
         choice = gets.strip.downcase
         tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
         TagAnswer.create_tag_answer(tag, new_answer)
