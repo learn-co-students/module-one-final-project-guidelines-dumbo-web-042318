@@ -20,10 +20,10 @@ class Interface
     link = Link.create(url: input_url, comment: input_comment)
     LinkAnswer.set_link_answer(link, answer)
   end
-#tag
-  def self.create_new_tag(tag_name)
-    Tag.create(t_content: tag_name)
-  end
+# #tag
+#   def self.create_new_tag(tag_name)
+#     Tag.create(t_content: tag_name)
+#   end
 # #tag_answer
 #   def self.create_tag_answer(tag, answer)
 #     TagAnswer.create(tag: tag, answer: answer)
@@ -288,7 +288,7 @@ class MenuCommands
         Interface.list_all_tags
         puts "enter the number of the tag to add it\nor type in a new tag and press enter"
         choice = gets.strip.downcase
-        tag = (choice.to_i == 0) ? Interface.create_new_tag(choice) : Tag.all[choice.to_i - 1]
+        tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
         TagAnswer.create_tag_answer(tag, new_answer)
       else # choice = false
         break
