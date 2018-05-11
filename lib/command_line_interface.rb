@@ -38,6 +38,19 @@ class WeatherCLI
     puts "Hello! Welcome to WeatherCLI! Before we get to the weather:"
   end
 
+  def get_num_days
+    puts "how many days do you want?"
+
+    num = gets.chomp.to_i
+    if num>5
+       num=5
+     elsif num<0
+       num=1
+     else
+       num
+     end
+  end
+
   def get_user_name # gets user name
     puts "What is your name?"
     @username = gets.chomp

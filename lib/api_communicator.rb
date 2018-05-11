@@ -58,5 +58,4 @@ class WeatherAPIGetter
     response = RestClient.get(link)
     JSON.parse(response)
   end
-
  end
