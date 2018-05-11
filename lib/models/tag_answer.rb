@@ -5,9 +5,13 @@ class TagAnswer < ActiveRecord::Base
 #tag_answer
   def self.create_tag_answer(tag, answer)
     if tag 
-      TagAnswer.create(tag: tag, answer: answer) 
+      if answer.tags.include?(tag) 
+        puts "You already added that tag!"
+      else
+        TagAnswer.create(tag: tag, answer: answer) 
+      end
     else
-     puts "you already made that tag!"
+     puts "You already made that tag!"
     end
   end
 
