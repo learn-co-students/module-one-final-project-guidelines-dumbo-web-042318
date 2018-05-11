@@ -2,6 +2,8 @@
 ### Answer all your questions in one simple CLI app
 ### (as long as you provide both question and answer)
 
+## Demo
+Watch a simple video tutorial [here](https://www.youtube.com/watch?v=sU8RzlFqsCI&feature=youtu.be)[.](https://www.youtube.com/watch?v=Zukh-0csKPc)
 # Install
 Simply clone down this repo, cd in and do: 
 
