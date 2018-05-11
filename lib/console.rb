@@ -58,14 +58,14 @@ class Interface
 
   # gets and prints out various combos of q's, a's, and links
 #tag
-  def self.list_all_tags
-    tags = Tag.all
-    tags.each_with_index do |tag,i|
-      print "#{i+1}. #{tag.t_content} | "
-      puts "\n" if (i+1) % 5 == 0
-    end
-    puts ""
-  end
+  # def self.list_all_tags
+  #   tags = Tag.all
+  #   tags.each_with_index do |tag,i|
+  #     print "#{i+1}. #{tag.t_content} | "
+  #     puts "\n" if (i+1) % 5 == 0
+  #   end
+  #   puts ""
+  # end
 #question
   def self.list_questions_by_tag(tag)
     arr = self.get_all_answered_questions
@@ -285,7 +285,7 @@ class MenuCommands
     loop do
       Menu.new_link_or_tag_y_n("tag")
       if self.yes_no_loop
-        Interface.list_all_tags
+        Tag.list_all_tags
         puts "enter the number of the tag to add it\nor type in a new tag and press enter"
         choice = gets.strip.downcase
         tag = (choice.to_i == 0) ? Tag.create_new_tag(choice) : Tag.all[choice.to_i - 1]
@@ -303,7 +303,7 @@ class MenuCommands
   end
 
   def self.pick_tag_questions_by_number
-    Interface.list_all_tags
+    Tag.list_all_tags
     puts "enter the number of the tag to see the questions linked to them, enter any letter to go back"
     choice = gets.strip
     TerminalUtilities.nicely_clear_terminal

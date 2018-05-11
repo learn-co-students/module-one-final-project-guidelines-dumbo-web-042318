@@ -7,15 +7,15 @@ class Tag < ActiveRecord::Base
     Tag.create(t_content: tag_name)
   end
 
-# #tag
-#   def self.list_all_tags
-#     tags = Tag.all
-#     tags.each_with_index do |tag,i|
-#       print "#{i+1}. #{tag.t_content} | "
-#       puts "\n" if (i+1) % 5 == 0
-#     end
-#     puts ""
-#   end
+#tag
+  def self.list_all_tags
+    tags = Tag.all
+    tags.each_with_index do |tag,i|
+      print "#{i+1}. #{tag.t_content} | "
+      puts "\n" if (i+1) % 5 == 0
+    end
+    puts ""
+  end
 
 # #tag
 #   def self.list_question_tags(question)
