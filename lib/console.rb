@@ -1,4 +1,4 @@
-class MenuCommands
+class MenuCommand
   def self.start
     puts `clear`
     Menu.main_menu_options
@@ -74,20 +74,20 @@ end
 
 def run
   loop do
-    choice = MenuCommands.start
+    choice = MenuCommand.start
     case choice
       when "1"
-        MenuCommands.make_new_q_a_l_t
+        MenuCommand.make_new_q_a_l_t
       when "2"
-        MenuCommands.show_everything
+        MenuCommand.show_everything
       when "3"
-        MenuCommands.pick_tag_questions_by_number
+        MenuCommand.pick_tag_questions_by_number
       when "4"
-         MenuCommands.add_l_t
+         MenuCommand.add_l_t
       when "5"
-        MenuCommands.update_q_a
+        MenuCommand.update_q_a
       when "6"
-        MenuCommands.delete_q_a_l_t
+        MenuCommand.delete_q_a_l_t
       when "q"
         puts "bye!"
         break
