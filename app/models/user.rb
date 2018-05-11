@@ -4,12 +4,12 @@ class User < ActiveRecord::Base
 
   def forecasts
     my_forecasts = []
-    batches.each do |batch|
+    batches.reload.each do |batch|
       my_forecasts << batch.forecasts
     end
     my_forecasts
   end
-  # 
+  #
   # def order_batch
   #   self.forecasts.last.sort_by{|forecast| forecast.temp}
   # end

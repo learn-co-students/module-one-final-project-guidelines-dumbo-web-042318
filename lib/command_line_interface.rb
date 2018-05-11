@@ -8,11 +8,12 @@ class WeatherCLI
   def welcome#says hello and grabs your name!
     welcome_message
     @new_user = get_user_name
+    run
   end
 
   def run #the good stuff
     safely_run
-    @batch = Batch.new
+    @batch = Batch.create
     @num = get_number_of_days
     create_and_save_forecast(@num)
     Query.create(city: @city_name, country_code: @country_code, user: @new_user, batch: @batch)
@@ -52,32 +53,34 @@ class WeatherCLI
     puts "What is your name?"
     @username = gets.chomp
     new_user = User.find_or_create_by(name: @username)
+    new_user
   end
 
   def get_city_name #asks you for a city name
     puts "Which city would you like to view weather for? Please enter city."
     @city_name = gets.chomp
+    #easter egg
     if @city_name == ""
       @city_name = "moron"
     end
       @city_name
   end
 
-  def get_country_code
-
+  def get_country_code    #rt from city name
     puts "Country code? Please enter country code as 2 characters **Use us for United States**"
     @country_code = gets.chomp
+    #rt from city name
     if @country_code == ""
       @country_code = "ar"
     end
     @country_code
   end
 
-  def get_forecast_from_api(city_name, country_code)
+  def get_forecast_from_api(city_name, country_code) #holla at cha api
     @instance_of_weatherapigetter.get_weather_forecast(city_name, country_code)
   end
 
-  def get_number_of_days
+  def get_number_of_days #dummy proofs a number
     puts "How many days of weather? You can choose from 1 to 5 days."
     num = gets.chomp.to_i
     if num ==42
@@ -93,20 +96,23 @@ class WeatherCLI
     end
   end
 
-  def self.id
-    @@id
-  end
+  # def self.id #maybe not needed. too afraid to delete
+  #   @@id
+  # end
 
-  def create_and_save_forecast(num)
+  def create_and_save_forecast(num) #method name says it all
     i = 0
      while i < num
-       hash_key = date_key_hash(i)
-      Forecast.create(temp: hash_key["temp"], humidity: hash_key["humidity"], date_text: hash_key["date"], weather: hash_key["description"], batch: @batch)
+       hash_of_i = date_key_hash(i)
+       #akchully making our obj and adding to table
+      Forecast.create(temp: hash_of_i["temp"], humidity: hash_of_i["humidity"], date_text: hash_of_i["date"], weather: hash_of_i["description"], batch: @batch)
        i += 1
      end
   end
 
-  def date_key_hash(index)#cleanup?
+  def date_key_hash(index)#cleanup?#kinda ugly but she works
+    #makes us a jerry rigged hash with out "main" hash and the date and weather
+    #which was originally outside our hash
     new_date = {}
     new_date["date"]= @weekly_arr[index]["dt_txt"]
     new_date["description"]= @weekly_arr[index]["weather"][0]["description"]
@@ -114,8 +120,8 @@ class WeatherCLI
     date_key_hash = new_key.merge(new_date)
   end
 
-  def display_result(arr_forecasts_obj)
-    puts "Hi, #{User.last.name}! Here’s the #{@num}-day forecast for #{@city_name}:"
+  def display_result(arr_forecasts_obj)#output. could maybe be made nice but w/e
+    puts "Hi, #{@new_user.name}! Here’s the #{@num}-day forecast for #{@city_name}:"
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     arr_forecasts_obj.each do |forecast|
       a = forecast.date_text
@@ -126,11 +132,11 @@ class WeatherCLI
     end
   end
 
-  def exit_message
+  def exit_message #totally fake message. F off loser
     puts "Thank you for using WeatherCLI! Have a nice day!"
   end
 
-  def fun_info
+  def fun_info #misleading name. 0 fun info
     puts "Welcome to fun info!"
     puts "Enter search to make a new search."
     puts "Enter history to see search history."
@@ -138,6 +144,7 @@ class WeatherCLI
     puts "Enter low to see low of each day of your search."
     puts "Enter x to exit program."
     input = gets.chomp.downcase
+    #case boi to see what lame method your dumb face wants to see
     case input
     when "search"
       run
@@ -157,31 +164,37 @@ class WeatherCLI
     end
   end
 
-  def history
-    puts "Here's all the forecasts you've searched:"
-    display_result(@new_user.forecasts.last)
+  def history #grabs the your forecasts
+    puts "Here's all the places you've searched:"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+    @new_user.queries.reload.each do |query|
+      puts " #{query.city},  #{query.country_code}."
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+    end
   end
 
-  def order_batch
+  def order_batch #read
     @new_user.forecasts.last.sort_by{|forecast| forecast.temp}
   end
 
-  def min_temp
+  def min_temp #grabs first from our ordered forecasts
     min = order_batch.first
     a = min.date_text
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    puts "The coldest day is:"
+    puts "The coldest day from your last search is:"
     print " Date: "
     p a
     puts " Temperature: #{min.temp} F"
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
   end
 
-  def high_temp
+  def high_temp #grabs last
     max = order_batch.last
     a = max.date_text
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    puts "The hottest day is:"
+    puts "The hottest day from your last search is:"
     print " Date: "
     p a
     puts " Temperature: #{max.temp} F"
@@ -190,3 +203,4 @@ class WeatherCLI
 
 
 end
+#nothing to see here
