@@ -29,7 +29,7 @@ class Question < ActiveRecord::Base
 
 
   def self.list_questions_by_tag(tag)
-    arr = Question.get_all_answered_questions
+    arr = Question.all.select { |question| question.answer.tags.include?(tag) }    
     arr.each_with_index do |question, i|
       if question.answer.tags.include?(tag)
         puts "-" * 42
@@ -38,16 +38,21 @@ class Question < ActiveRecord::Base
         Link.print_links(question.answer)
         Tag.list_question_tags(question)
       end
-      if question.answer.tags.length == 0
-        puts "-" * 42 
-        puts " There are no questions with that tag. :(" 
-        puts "-" * 42 
-      end
-
+    end
+    if arr.empty?
+       puts "-" * 42 
+       puts " There are no questions with that tag. :(" 
+       puts "-" * 42 
     end
   end
 
+  
 
+#       if question.answer.tags.length == 0
+#         puts "-" * 42 
+#         puts " There are no questions with that tag. :(" 
+#         puts "-" * 42 
+#       end
 
   def self.list_everything
     Question.get_all_answered_questions.each_with_index do |q, i|

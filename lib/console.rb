@@ -135,25 +135,17 @@ class MenuCommands
 
   def self.update_q_a
     Question.list_questions(Question.get_all_questions)
-    puts "Enter the number of the question you want to edit."
-    puts "You will be able to edit the answer, links, or tags as well\nEnter q to go back."
-    choice = gets.strip
-      question = Question.question_object_from_menu(choice.to_i)
-    if choice == "q" 
-      ""
-    elsif choice.to_i != 0 && question
-
+    puts "Enter the number of the question you want to edit.\nYou will be able to edit the answer, links, or tags as well\nEnter q to go back."
+    choice = gets.strip.to_i
+    question = Question.question_object_from_menu(choice)
+    if choice != 0 && question
       TerminalUtilities.clear_screen
       Menu.edit_question(question)
-      if self.yes_no_loop
-        Question.update_question(question)
-      end 
+      Question.update_question(question) if self.yes_no_loop
 
       TerminalUtilities.clear_screen
       Menu.edit_answer(question.answer)
-      if self.yes_no_loop
-        Answer.update_answer(question.answer)
-      end 
+      Answer.update_answer(question.answer) if self.yes_no_loop
     end
   end
 
