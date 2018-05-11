@@ -154,41 +154,37 @@ class Interface
   end
 
     # delete methods
-#question
-  def self.destroy_links(index_from_menu)
-    question = self.question_object_from_menu(index_from_menu)
-    self.destroy_question(question) if question
-  end
+
 #question??????
   def self.destroy_answer_links(index_from_menu)
     question = self.question_object_from_menu(index_from_menu)
     if question
-      self.destroy_links(question)
+      Question.destroy_links(question)
       self.destroy_answer(question)
     end
   end
 #question
-  def self.destroy_question_answer_links_tags(index_from_menu)
-    question = self.question_object_from_menu(index_from_menu)
-    if question
-      self.destroy_all_tags_from_question(question)
-      self.destroy_links(question)
-      self.destroy_answer(question)
-      self.destroy_question(question)
-    end
-  end
+  # def self.destroy_question_answer_links_tags(index_from_menu)
+  #   question = self.question_object_from_menu(index_from_menu)
+  #   if question
+  #     self.destroy_all_tags_from_question(question)
+  #     self.destroy_links(question)
+  #     self.destroy_answer(question)
+  #     self.destroy_question(question)
+  #   end
+  # end
 #question
-  def self.destroy_question(question)
-    question.destroy if question
-  end
+  # def self.destroy_question(question)
+  #   question.destroy if question
+  # end
 #question
-  def self.destroy_answer(question)
-    question.answer.destroy if question.answer
-  end
+  # def self.destroy_answer(question)
+  #   question.answer.destroy if question.answer
+  # end
 #question
-  def self.destroy_links(question)
-    question.answer.links.each { |link| link.destroy } if question.answer
-  end
+  # def self.destroy_links(question)
+  #   question.answer.links.each { |link| link.destroy } if question.answer
+  # end
 # #tag_answer
 #   def self.destroy_tag_from_answer(tag,answer)
 #     if answer
@@ -197,12 +193,12 @@ class Interface
 #     end
 #   end
 #question
-  def self.destroy_all_tags_from_question(question)
-    if question.answer
-      tags = question.answer.tags
-      tags.each { |tag| TagAnswer.destroy_tag_from_answer(tag,question.answer) }
-    end
-  end
+  # def self.destroy_all_tags_from_question(question)
+  #   if question.answer
+  #     tags = question.answer.tags
+  #     tags.each { |tag| TagAnswer.destroy_tag_from_answer(tag,question.answer) }
+  #   end
+  # end
 #tag
   # def self.destroy_tag_from_all(tag)
   #   if tag
@@ -316,7 +312,7 @@ class MenuCommands
     puts "enter the number of the question you want to delete."
     puts "You will also delete the accompanying answer, links, and tags.\nEnter any letter to go back"
     choice = gets.strip
-    choice.to_i == 0 ? "" : Interface.destroy_question_answer_links_tags(choice.to_i)
+    choice.to_i == 0 ? "" : Question.destroy_question_answer_links_tags(choice.to_i)
   end
 end
 
