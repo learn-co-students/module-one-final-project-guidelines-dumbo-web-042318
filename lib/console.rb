@@ -103,11 +103,11 @@ class Interface
   #   links.length.times { |i| puts "#{i+1}. #{links[i].url}\n#{links[i].comment}" }
   # end
 #link
-  def self.print_links(answer)
-    answer.links.each do |link|
-      puts "* #{link.url}\n\t#{link.comment}"
-    end
-  end
+  # def self.print_links(answer)
+  #   answer.links.each do |link|
+  #     puts "* #{link.url}\n\t#{link.comment}"
+  #   end
+  # end
 
   # THIS ONE
 #question
@@ -117,7 +117,7 @@ class Interface
       puts "#{i+1}. #{q.question}"
       puts "-- #{q.answer.answer}" #TODO FIX THAT NAMING CONVENTION
       puts "Links:"
-      self.print_links(q.answer)
+      Link.print_links(q.answer)
       Tag.list_question_tags(q)
     end
   end
@@ -136,13 +136,13 @@ class Interface
     answer.update(answer: input)
   end
 #link
-  def self.update_link(link)
-    puts "What's your edited link url?"
-    new_url = gets.strip
-    puts "What's your edited comment for the link?"
-    new_comment = gets.strip
-    link.update(url: new_url, comment: new_comment)
-  end
+  # def self.update_link(link)
+  #   puts "What's your edited link url?"
+  #   new_url = gets.strip
+  #   puts "What's your edited comment for the link?"
+  #   new_comment = gets.strip
+  #   link.update(url: new_url, comment: new_comment)
+  # end
 
 
   # selector methods
