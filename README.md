@@ -5,7 +5,7 @@
 # Install
 Simply clone down this repo, cd in and do: 
 
-`<$ ruby bin/run.rb>`  
+`$ ruby bin/run.rb`  
 
 Feel free to alias that, it's the faster way. 
 
