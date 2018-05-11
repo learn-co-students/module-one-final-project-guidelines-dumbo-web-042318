@@ -1,3 +1,4 @@
+require 'pry'
 # class Interface
 #question
  #  def self.set_question
@@ -224,12 +225,13 @@ class Menu
     puts "2. Show All questions/answers/links/tags"
     puts "3. Show all question by tag"
     puts "4. Delete a question/answer/link/tag"
+    puts "5. Update question/answer/link/tags"
     puts "Enter q to exit"
   end
 
   def self.new_link_or_tag_y_n(option)
     puts "Would you like to add a #{option}?"
-    puts "y/n (lowercase, just the letter)"
+    # puts "y/n (lowercase, just the letter)"
   end
 end
 
@@ -248,6 +250,7 @@ end
 class MenuCommands
   # utility commands
   def self.yes_no_loop
+    puts "y/n (lowercase, just the letter)"
     loop do
       choice = gets.strip.downcase
       if choice == "y"
@@ -311,9 +314,42 @@ class MenuCommands
   def self.delete_q_a_l_t
     Question.list_questions(Question.get_all_questions)
     puts "enter the number of the question you want to delete."
-    puts "You will also delete the accompanying answer, links, and tags.\nEnter any letter to go back"
+    puts "You will also delete the accompanying answer, links, and tags.\nEnter q to go back."
     choice = gets.strip
     choice.to_i == 0 ? "" : Question.destroy_question_answer_links_tags(choice.to_i)
+  end
+
+  def self.update_q_a_l_t
+    Question.list_questions(Question.get_all_questions)
+    puts "Enter the number of the question you want to edit."
+    puts "You will be able to edit the answer, links, or tags as well\nEnter q to go back."
+    choice = gets.strip
+    if choice == "q" 
+      ""
+    elsif choice.to_i != 0
+      question = Question.question_object_from_menu(choice.to_i)
+
+      TerminalUtilities.nicely_clear_terminal
+      puts "Here is what you had for a question:\n\n"
+      puts "-" * 20 
+      puts question.question
+      puts "-" * 20 + "\n\n"
+      puts "Would you like to edit this?"
+      if self.yes_no_loop
+        Question.update_question(question)
+      end 
+
+      TerminalUtilities.nicely_clear_terminal
+      puts "Here is what you had for an answer:\n\n"
+      puts "-" * 20
+      puts question.answer.answer
+      puts "-" * 20 + "\n\n"
+      puts "Would you like to edit this?"
+      if self.yes_no_loop
+        Answer.update_answer(question.answer)
+      end 
+
+    end
   end
 end
 
@@ -331,6 +367,8 @@ def run
         MenuCommands.pick_tag_questions_by_number
       when "4"
         MenuCommands.delete_q_a_l_t
+      when "5"
+        MenuCommands.update_q_a_l_t
       when "q"
         puts "bye!"
         break
