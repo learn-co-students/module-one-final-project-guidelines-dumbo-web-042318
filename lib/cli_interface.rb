@@ -6,6 +6,10 @@ def welcome
     puts "Would you like to begin your trip? (for sure / nah brah)"
 end 
 
+def exit
+    puts "SEE YOU NEXT TIME, BROCHACHO!"
+end
+
 def line_spacers
     puts "-------------------------"
 end 
@@ -35,6 +39,16 @@ def state_info_options
         "-Hit that rewind button!"]
     list_options(options)
 end 
+
+def main_menu
+    loop do
+        main_options
+        options_answer = gets.chomp
+        options_choice(options_answer)
+        sleep 1
+        break if options_answer == "exit"
+    end 
+end
 
 def new_prompt
     sleep 3
@@ -109,11 +123,34 @@ def legal_limitations(state)
     line_spacers
 end
 
+def booking_promt(user_instance)
+    puts "Choose a destination, brosaurus"
+    sleep 2
+    list_all_locations
+    user_destination = gets.chomp.capitalize
+    puts "Enter a date and we'll get you sky high in two ways!"
+    trip_date = gets.chomp
+    book_a_trip(user_destination, trip_date, user_instance)
+end
+
 def book_a_trip(destination, date, user)
     new_trip = FourTwentyTrip.create(date_of_trip: date)
     new_trip.location = Location.find_by(name: destination)
     user.four_twenty_trips << new_trip
     puts "Have a totally bodacious trip to #{new_trip.location.name}, #{user.name}!"
+end
+
+def book_new_trip
+    user_instance = user_check
+    if user_instance != nil 
+        user_instance
+    else
+        puts "You're not a member of this village. You down to make a new blazer?"
+        user_instance = blazer_prompt
+    end
+    if user_instance != nil
+        booking_promt(user_instance)
+    end
 end
 
 def user_check
@@ -144,29 +181,7 @@ def options_choice(user_answer)
     case user_answer.downcase
         when "create blazer"
             puts "You ready to dive into that brocean, Broseidon?"
-            blazer_prompt
-            ##THIS WAS TRYING TO ADD A BOOK_A_TRIP PATH DIRECTLY AFTER NEW_BLAZER WAS MADE...NOT WORKING THO.
-            # new_blazer_instance = new_blazer
-            # ##new_blazer_instance == nil...even tho new_blazer runs fine...por que?
-            # binding.pry
-            # line_spacers
-            # puts "Wanna just book a trip right now?! "
-            # booking_response = gets.chomp
-            # if booking_response.include?("ye") || booking_response.include?("for sure")
-            #     ##maybe make a method for this book--'booking prompt?'
-            #     puts "Choose a destination, brosaurus"
-            #     sleep 2
-            #     list_all_locations
-            #     user_destination = gets.chomp
-            #     puts "when you wanna go?"
-            #     trip_date = gets.chomp
-            #     binding.pry
-            #     ##issue here, taking this path, new_blazer_instance returns nil, even tho new_blazer method above seemed to work
-            #     book_a_trip(user_destination, trip_date, new_blazer_instance)
-            # else
-            #     puts "That's chill, welcome to the squad!"
-            #     line_spacers
-            # end
+            blazer_prompt    
         when "state info bro"
             line_spacers
             puts "Try asking a question like these :"
@@ -206,26 +221,11 @@ def options_choice(user_answer)
                 break if user_state_option.include?("rewind")
             end
         when "book a trip"
-            user_instance = user_check
-            if user_instance != nil 
-                user_instance
-            else
-                puts "You're not a member of this village. You down to make a new blazer?"
-                user_instance = blazer_prompt
-            end
-            ##this again...turn this into #booking_prompt ?
-            puts "Choose a destination, brosaurus"
-            sleep 2
-            list_all_locations
-            user_destination = gets.chomp.capitalize
-            puts "Enter a date and we'll get you sky high in two ways!"
-            trip_date = gets.chomp
-            book_a_trip(user_destination, trip_date, user_instance)
+            book_new_trip
         when "exit"
-            puts "SEE YOU NEXT TIME, BROCHACHO!"
+            exit
     end
 end 
-
 
 def four_twenty_tripster_cli_interface
    welcome 
@@ -236,14 +236,29 @@ def four_twenty_tripster_cli_interface
         line_spacers
         puts "Follow these commands to start your journey :"
         sleep 1
-        loop do
-            main_options
-            options_answer = gets.chomp
-            options_choice(options_answer)
-            sleep 1
-            break if options_answer == "exit"
-        end 
-    end 
-
+        main_menu
+    end
 end 
 
+##THIS WAS TRYING TO ADD A BOOK_A_TRIP PATH DIRECTLY AFTER NEW_BLAZER WAS MADE...NOT WORKING THO.
+            # new_blazer_instance = new_blazer
+            # ##new_blazer_instance == nil...even tho new_blazer runs fine...por que?
+            # binding.pry
+            # line_spacers
+            # puts "Wanna just book a trip right now?! "
+            # booking_response = gets.chomp
+            # if booking_response.include?("ye") || booking_response.include?("for sure")
+            #     ##maybe make a method for this book--'booking prompt?'
+            #     puts "Choose a destination, brosaurus"
+            #     sleep 2
+            #     list_all_locations
+            #     user_destination = gets.chomp
+            #     puts "when you wanna go?"
+            #     trip_date = gets.chomp
+            #     binding.pry
+            #     ##issue here, taking this path, new_blazer_instance returns nil, even tho new_blazer method above seemed to work
+            #     book_a_trip(user_destination, trip_date, new_blazer_instance)
+            # else
+            #     puts "That's chill, welcome to the squad!"
+            #     line_spacers
+            # end
