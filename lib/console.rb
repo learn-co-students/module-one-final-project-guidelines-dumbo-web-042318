@@ -11,15 +11,15 @@ class Interface
     input = gets.strip
     Answer.create(answer: input, question_id: question.id)
   end
-#link
-  def self.set_link(answer)
-    puts "What's the url?"
-    input_url = gets.strip
-    puts "And do you have a comment?"
-    input_comment = gets.strip
-    link = Link.create(url: input_url, comment: input_comment)
-    LinkAnswer.set_link_answer(link, answer)
-  end
+# #link
+#   def self.set_link(answer)
+#     puts "What's the url?"
+#     input_url = gets.strip
+#     puts "And do you have a comment?"
+#     input_comment = gets.strip
+#     link = Link.create(url: input_url, comment: input_comment)
+#     LinkAnswer.set_link_answer(link, answer)
+#   end
 # #tag
 #   def self.create_new_tag(tag_name)
 #     Tag.create(t_content: tag_name)
@@ -279,7 +279,7 @@ class MenuCommands
     # make links
     loop do
       Menu.new_link_or_tag_y_n("link")
-      self.yes_no_loop ? Interface.set_link(new_answer) : break
+      self.yes_no_loop ? Link.set_link(new_answer) : break
     end
     # make tags
     loop do
