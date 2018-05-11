@@ -225,7 +225,7 @@ class Menu
     puts "2. Show All questions/answers/links/tags"
     puts "3. Show all question by tag"
     puts "4. Delete a question/answer/link/tag"
-    puts "5. Update question/answer/link/tags"
+    puts "5. Update question and answer"
     puts "Enter q to exit"
   end
 
@@ -233,6 +233,24 @@ class Menu
     puts "Would you like to add a #{option}?"
     # puts "y/n (lowercase, just the letter)"
   end
+
+
+  def self.edit_question(question)
+    puts "Here is what you had for a question:\n\n"
+    puts "-" * 40 
+    puts question.question
+    puts "-" * 40 + "\n\n"
+    puts "Would you like to edit this?"
+  end
+
+  def self.edit_answer(answer)
+    puts "Here is what you had for an answer:\n\n"
+    puts "-" * 40
+    puts answer.answer
+    puts "-" * 40 + "\n\n"
+    puts "Would you like to edit this?"
+  end
+
 end
 
 class TerminalUtilities
@@ -330,25 +348,16 @@ class MenuCommands
       question = Question.question_object_from_menu(choice.to_i)
 
       TerminalUtilities.nicely_clear_terminal
-      puts "Here is what you had for a question:\n\n"
-      puts "-" * 20 
-      puts question.question
-      puts "-" * 20 + "\n\n"
-      puts "Would you like to edit this?"
+      Menu.edit_question(question)
       if self.yes_no_loop
         Question.update_question(question)
       end 
 
       TerminalUtilities.nicely_clear_terminal
-      puts "Here is what you had for an answer:\n\n"
-      puts "-" * 20
-      puts question.answer.answer
-      puts "-" * 20 + "\n\n"
-      puts "Would you like to edit this?"
+      Menu.edit_answer(question.answer)
       if self.yes_no_loop
         Answer.update_answer(question.answer)
       end 
-
     end
   end
 end
