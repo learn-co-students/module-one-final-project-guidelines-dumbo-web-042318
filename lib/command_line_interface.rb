@@ -103,7 +103,11 @@ class WeatherCLI
   def create_and_save_forecast(num) #method name says it all
     i = 0
      while i < num
+       begin
        hash_of_i = date_key_hash(i)
+      rescue
+        puts "congrats you found a stupid bug bc the times arent synced perfectly"
+      end
        #akchully making our obj and adding to table
       Forecast.create(temp: hash_of_i["temp"], humidity: hash_of_i["humidity"], date_text: hash_of_i["date"], weather: hash_of_i["description"], batch: @batch)
        i += 1
@@ -137,12 +141,12 @@ class WeatherCLI
   end
 
   def fun_info #misleading name. 0 fun info
-    puts "Welcome to fun info!"
+    puts "\nWelcome to fun info!"
     puts "Enter search to make a new search."
     puts "Enter history to see search history."
     puts "Enter high to see high of each day of your search."
     puts "Enter low to see low of each day of your search."
-    puts "Enter x to exit program."
+    puts "Enter x to exit program.\n"
     input = gets.chomp.downcase
     #case boi to see what lame method your dumb face wants to see
     case input
