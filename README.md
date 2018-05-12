@@ -1,49 +1,51 @@
-# Module One Final Project Guidelines
+# LeanLogr 
+### Answer all your questions in one simple CLI app
+### (as long as you provide both question and answer)
 
-Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
+## Demo
+Watch a simple video tutorial [here](https://www.youtube.com/watch?v=sU8RzlFqsCI&feature=youtu.be)[.](https://www.youtube.com/watch?v=Zukh-0csKPc)
+# Install
+Simply clone down this repo, cd in and do: 
 
-For your final project, we'll be building a Command Line database application.
+`$ ruby bin/run.rb`  
 
-## Project Requirements
+Feel free to alias that, it's the faster way. 
 
-### Option One - Data Analytics Project
+# Overview 
+LeanLogr is great for storing questions that might not fit nicely into your regular notes. Each new "note" here is posed as a 
+question and answer. You can also add links to the sites where you found the answer, as well as tags to help you organize everything.
 
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have at minimum three models including one join model. This means you must have a many-to-many relationship.
-3. You should seed your database using data that you collect either from a CSV, a website by scraping, or an API.
-4. Your models should have methods that answer interesting questions about the data. For example, if you've collected info about movie reviews, what is the most popular movie? What movie has the most reviews?
-5. You should provide a CLI to display the return values of your interesting methods.  
-6. Use good OO design patterns. You should have separate classes for your models and CLI interface.
+# How to use 
+You have 6 options at start up. To access every command here (and everywhere in the app) type in either the number, letter, or words you need to, and then hit enter. And some screens simply need you to press enter to move along. Here are the main options:
 
-### Option Two - Command Line CRUD App
+1. Add question/answer/link/tags
+2. Show All questions/answers/links/tags
+3. Show all question by tag
+4. Add new links and tags to question
+5. Update question and answer
+6. Delete a question/answer/link/tag
 
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have a minimum of three models.
-3. You should build out a CLI to give your user full CRUD ability for at least one of your resources. For example, build out a command line To-Do list. A user should be able to create a new to-do, see all todos, update a todo item, and delete a todo. Todos can be grouped into categories, so that a to-do has many categories and categories have many to-dos.
-4. Use good OO design patterns. You should have separate models for your runner and CLI interface.
+(and q to exit)
 
-### Brainstorming and Proposing a Project Idea
+### Option 1: Add everything 
+You will be prompted to type in your question, then the answer, along with as many links and tags as you want. You will be asked if you want to add another link and tag after each one, so don't worry, getting out of it is easy
 
-Projects need to be approved prior to launching into them, so take some time to brainstorm project options that will fulfill the requirements above.  You must have a minimum of four [user stories](https://en.wikipedia.org/wiki/User_story) to help explain how a user will interact with your app.  A user story should follow the general structure of `"As a <role>, I want <goal/desire> so that <benefit>"`. In example, if we were creating an app to randomly choose nearby restaurants on Yelp, we might write:
+### Option 2: See it all 
+You can see all your questions, answers, links, and tags. 
 
-* As a user, I want to be able to enter my name to retrieve my records
-* As a user, I want to enter a location and be given a random nearby restaurant suggestion
-* As a user, I should be able to reject a suggestion and not see that restaurant suggestion again
-* As a user, I want to be able to save to and retrieve a list of favorite restaurant suggestions
+### Option 3: Sort by tag 
+Each Q/A can have tags, this is where you can see all your tags, and then see any questions related to those tags. Tags tags tags. 
 
-## Instructions
+### Option 4: Add stuff 
+Sometimes you want to add stuff to your stuff. Good. You can easily add new links and tags to any of your questions.
 
-1. Fork and clone this repository.
-2. Build your application. Make sure to commit early and commit often. Commit messages should be meaningful (clearly describe what you're doing in the commit) and accurate (there should be nothing in the commit that doesn't match the description in the commit message). Good rule of thumb is to commit every 3-7 mins of actual coding time. Most of your commits should have under 15 lines of code and a 2 line commit is perfectly acceptable.
-3. Make sure to create a good README.md with a short description, install instructions, a contributors guide and a link to the license for your code.
-4. Make sure your project checks off each of the above requirements.
-5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
-    * The video should:
-      - Have an overview of your project.(2 minutes max)
-6. Prepare a presentation to follow your video.(3 minutes max)
-    * Your presentation should:
-      - Describe something you struggled to build, and show us how you ultimately implemented it in your code.
-      - Discuss 3 things you learned in the process of working on this project.
-      - Address, if anything, what you would change or add to what you have today?
-      - Present any code you would like to highlight.   
-7. *OPTIONAL, BUT RECOMMENDED*: Write a blog post about the project and process.
+### Option 5: Edit questions 
+Did you learn a new thing? Wonderful! You can easily edit both the question and the answer to reflect your new knowledge. 
+
+### Option 6: Destroy it! 
+Ashamed of a dumb question? We understand, sometimes things become obvious in hindsight. Delete your shame with option six for every question you don't like. 
+
+# Team 
+This app was lovingly crafted by Shawn Koski and Mike Cronin. It was put together with lots of heart, but no sleep.
+
+[license](https://github.com/MostlyFocusedMike/module-one-final-project-guidelines-dumbo-web-042318/blob/master/LICENSE.md)
