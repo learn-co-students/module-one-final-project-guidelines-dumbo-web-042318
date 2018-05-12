@@ -1,0 +1,27 @@
+-Web scraping
+    -Saige
+
+-Building Tables and Models
+    -Models
+        -User
+            -user has_many trips
+            -user has_many locations through trips
+        -Trips
+            -belongs to user
+            -belongs to location
+        -Locations
+            -has_many trips
+            -has_many users through trips
+        -Methods
+            -
+
+-Seed data to tables 
+
+-CLI app
+
+
+-questions/issues
+    -can't run "rake console" because it says i'm missing files(models)...When "git pull" down saige's branch to my branch...it said the process couldn't be completed and the "model" files had to be deleted...I didn't delete them, but then went back to VScode and saige's new work was there...i thought it somehow went through...i've said and committed my work on the models on my branch...but when running "rake console"...couldn't complete because it said that "models" were missing.
+    -want to confirm about 'require_all'...i'm using it in the run_420 file to get all the 'models'...is it working? the run file itself is requiring 'config/environment', is that allowing our connection to the database?  
+-miscellaneous notes
+    -keep in mind, locations table...column name has "posses", not "possess"
