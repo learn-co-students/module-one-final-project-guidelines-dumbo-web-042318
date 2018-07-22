@@ -1,13 +1,20 @@
 require "pry"
 class CommandLineInterface
-  def greeting
-      puts "Hello admin!".white.on_red
-      puts "Type 1 for search".green #Reading
-      puts "Type 2 to work with database".red #Create, Delete, Update
-      puts "Type 3 to view all movies".blue
-      puts "Type 4 to view all venues"
 
-      response  = gets.chomp
+  def main_menu
+    puts "Hello admin!".white.on_red
+    puts "Type 1 for search".green #Reading
+    puts "Type 2 to work with database".red #Create, Delete, Update
+    puts "Type 3 to view all movies".blue
+    puts "Type 4 to view all venues"
+    puts "Type exit to terminate the program!".green
+  end
+  def greeting(response)
+      # puts "Hello admin!".white.on_red
+      # puts "Type 1 for search".green #Reading
+      # puts "Type 2 to work with database".red #Create, Delete, Update
+      # puts "Type 3 to view all movies".blue
+      # puts "Type 4 to view all venues"
 
       case response
       when "1"
@@ -217,6 +224,18 @@ class CommandLineInterface
     location_venue = location.theater_name
     # puts "#{movie_title} that are playing at #{location_venue} at #{time_response}"
     tp ShowTime.all, "movie.title", "time", "location.theater_name"
+  end
+
+  def run_cli
+      loop do
+        main_menu
+        response = gets.chomp
+        if response != "exit"
+          greeting(response)
+        else
+          break
+        end
+      end
   end
 
 end
